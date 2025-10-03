@@ -60,6 +60,25 @@
             border: 5px solid white;
         }
 
+        /* INICIO DE CAMBIOS DE ESTILO */
+        .home-link-container {
+            text-align: center;
+            margin-bottom: 20px; /* Espacio para separarlo del selector de tipo de usuario */
+        }
+
+        .home-link-container a {
+            color: var(--secondary-color); /* Color principal */
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .home-link-container a:hover {
+            color: var(--primary-color); /* Oscurece al pasar el mouse */
+            text-decoration: underline;
+        }
+        /* FIN DE CAMBIOS DE ESTILO */
+
         .user-type-selector {
             display: flex;
             justify-content: center;
@@ -213,10 +232,14 @@
                     <i class="fas fa-lock"></i>
                 </div>
             </div>
-            <h2 class="text-center mb-4 text-primary">Iniciar Sesión</h2>
-            <p class="logo-subtitle">Sistema de Gestión de Préstamos</p>
+            <h2 class="text-center mb-2 text-primary">Iniciar Sesión</h2>
+            <p class="logo-subtitle text-center mb-3">Sistema de Gestión de Préstamos</p>
 
-
+            <div class="home-link-container">
+                <a href="index.html" class="text-decoration-none">
+                    <i class="fas fa-home me-2"></i>Ir a Página Principal
+                </a>
+            </div>
             <div class="user-type-selector">
                 <div class="user-type-card active" data-type="admin">
                     <i class="fas fa-user-shield me-2"></i>
@@ -528,7 +551,7 @@
                 // 3. Hacer fetch SIN cabeceras personalizadas
                 const response = await fetch(backendUrl, {
                     method: 'POST',
-                    body: form   // NO pongas headers
+                    body: form  // NO pongas headers
                 });
 
                 // 4. Leer el JSON de respuesta
@@ -607,7 +630,6 @@
                     selectedType === 'client' ? 'block' : 'none';
             });
         });
-
 
 
     </script>
