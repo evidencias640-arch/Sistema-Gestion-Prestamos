@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administrador - SGL Pro</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --success-color: #27ae60;
+            --danger-color: #e74c3c;
+            --warning-color: #f39c12;
+            --sidebar-width: 280px;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: var(--sidebar-width);
+            background: linear-gradient(180deg, var(--primary-color) 0%, #34495e 100%);
+            color: white;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .sidebar.collapsed {
+            width: 70px;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar-header h3 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .sidebar-header .subtitle {
+            font-size: 0.8rem;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        .sidebar-menu {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin: 5px 0;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .sidebar-menu a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            padding-left: 25px;
+        }
+
+        .sidebar-menu a.active {
+            background: var(--secondary-color);
+            color: white;
+            box-shadow: 0 2px 10px rgba(52, 152, 219, 0.3);
+        }
+
+        .sidebar-menu a i {
+            width: 20px;
+            margin-right: 15px;
+            text-align: center;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            transition: all 0.3s ease;
+            min-height: 100vh;
+        }
+
+        .main-content.expanded {
+            margin-left: 70px;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            background: white;
+            border-bottom: 1px solid #e9ecef;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .top-bar h1 {
+            margin: 0;
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        /* Content Area */
+        .content-area {
+            padding: 30px;
+        }
+
+        .page-section {
+            display: none;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        /* Cards */
+        .stats-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border: none;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .stats-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .stats-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .stats-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .stats-label {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        /* Forms */
+        .form-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+        }
+
+        .form-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        /* Tables */
+        .table-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .table-responsive {
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .table thead {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .table tbody tr:hover {
+            background-color: rgba(52, 152, 219, 0.1);
+        }
+
+        /* Buttons */
+        .btn-primary-custom {
+            background: linear-gradient(135deg, var(--secondary-color), #2980b9);
+            border: none;
+            padding: 10px 20px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        /* Modals */
+        .modal-content {
+            border-radius: 15px;
+            border: none;
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--secondary-color), #2980b9);
+            color: white;
+            border-radius: 15px 15px 0 0;
+        }
+
+        /* Filters */
+        .filter-bar {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .top-bar {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+        }
+
+        /* Payment Plan Table */
+        .payment-plan-table {
+            font-size: 0.9rem;
+        }
+
+        .payment-plan-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        /* Contract Styles */
+        .contract-preview {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        /* Alerts and Status */
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: rgba(39, 174, 96, 0.1);
+            color: var(--success-color);
+        }
+
+        .status-paid {
+            background: rgba(52, 152, 219, 0.1);
+            color: var(--secondary-color);
+        }
+
+        .status-overdue {
+            background: rgba(231, 76, 60, 0.1);
+            color: var(--danger-color);
+        }
+
+        /* Loading States */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .loading-spinner {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h3>SGL Pro</h3>
+            <div class="subtitle">Panel Admin</div>
+        </div>
+        
+        <ul class="sidebar-menu">
+            <li>
+                <a href="#" class="menu-link active" data-section="dashboard">
+                    <i class="fa fa-bar-chart"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="menu-link" data-section="clients">
+                    <i class="fas fa-users"></i>
+                    <span>Clientes</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="menu-link" data-section="loans">
+                    <i class="fas fa-money-bills"></i>
+                    <span>Préstamos</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="menu-link" data-section="payments">
+                    <i class="fas fa-credit-card"></i>
+                    <span>Pagos</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="menu-link" data-section="contracts">
+                    <i class="fas fa-file-contract"></i>
+                    <span>Contratos</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="menu-link" data-section="reports">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Reportes</span>
+                </a>
+            </li>
+            <li style="margin-top: 30px;">
+                <a href="#" onclick="logout()" style="color: #e74c3c;">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Cerrar Sesión</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="main-content" id="mainContent">
+        <div class="top-bar">
+            <div class="d-flex align-items-center">
+                <button class="btn btn-link p-0 me-3" onclick="toggleSidebar()">
+                    <i class="fas fa-bars text-dark fs-4"></i>
+                </button>
+                <h1 id="pageTitle">Dashboard</h1>
+            </div>
+            
+            <div class="user-info">
+                <div class="text-end">
+                    <div class="fw-bold" id="welcomeUser">Administrador</div>
+                    <small class="text-muted">En línea</small>
+                </div>
+                <div class="user-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-area">
+            <div id="dashboard-section" class="page-section active">
+                <div class="filter-bar">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <h5 class="mb-0">
+                                <i class="fas fa-chart-line text-primary me-2"></i>
+                                Estadísticas del Sistema
+                            </h5>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row g-2">
+                                <div class="col-md-6">
+                                    <select class="form-select" id="filterMonth">
+                                        <option value="">Todos los meses</option>
+                                        <option value="1">Enero</option>
+                                        <option value="2">Febrero</option>
+                                        <option value="3">Marzo</option>
+                                        <option value="4">Abril</option>
+                                        <option value="5">Mayo</option>
+                                        <option value="6">Junio</option>
+                                        <option value="7">Julio</option>
+                                        <option value="8">Agosto</option>
+                                        <option value="9">Septiembre</option>
+                                        <option value="10">Octubre</option>
+                                        <option value="11">Noviembre</option>
+                                        <option value="12">Diciembre</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <select class="form-select" id="filterYear">
+                                        <option value="">Todos los años</option>
+                                        <option value="2024">2024</option>
+                                        <option value="2025">2025</option>
+                                        <option value="2026">2026</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="stats-card">
+                            <div class="stats-icon" style="background: var(--success-color)">
+                                <i class="fas fa-money-bill-wave"></i>
+                            </div>
+                            <div class="stats-value" id="totalLoansCount">0</div>
+                            <div class="stats-label">Total Préstamos</div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="stats-card">
+                            <div class="stats-icon" style="background: var(--secondary-color)">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="stats-value" id="highestLoan">$0</div>
+                            <div class="stats-label">Préstamo más Alto</div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="stats-card">
+                            <div class="stats-icon" style="background: var(--warning-color)">
+                                <i class="fas fa-coins"></i>
+                            </div>
+                            <div class="stats-value" id="totalEarnings">$0</div>
+                            <div class="stats-label">Total Ganancias</div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="stats-card">
+                            <div class="stats-icon" style="background: var(--danger-color)">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stats-value" id="totalClients">0</div>
+                            <div class="stats-label">Total Clientes</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="table-card">
+                            <h5 class="mb-3">
+                                <i class="fas fa-clock text-primary me-2"></i>
+                                Actividad Reciente
+                            </h5>
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Cliente</th>
+                                            <th>Acción</th>
+                                            <th>Monto</th>
+                                            <th>Fecha</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="recentActivityTable">
+                                        <tr>
+                                            <td colspan="4" class="text-center">Cargando actividad...</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-card">
+                            <h5 class="mb-3">
+                                <i class="fas fa-bell text-warning me-2"></i>
+                                Alertas
+                            </h5>
+                            <div id="alertsList">
+                                <div class="alert alert-info">
+                                    <i class="fas fa-info-circle me-2"></i>
+                                    Sistema funcionando correctamente
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="clients-section" class="page-section">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-card">
+                            <h4>
+                                <i class="fas fa-user-plus text-primary me-2"></i>
+                                Registrar Nuevo Cliente
+                            </h4>
+                            <form id="clientForm">
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label">Tipo de Documento</label>
+                                        <select class="form-select" id="clientDocType" required>
+                                            <option value="">Seleccionar</option>
+                                            <option value="CC">Cédula de Ciudadanía</option>
+                                            <option value="CE">Cédula de Extranjería</option>
+                                            <option value="TI">Tarjeta de Identidad</option>
+                                            <option value="PP">Pasaporte</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Número de Documento</label>
+                                        <input type="text" class="form-control" id="clientDocNumber" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Nombre Completo</label>
+                                    <input type="text" class="form-control" id="clientFullName" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Teléfono</label>
+                                    <input type="tel" class="form-control" id="clientPhone" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Dirección</label>
+                                    <input type="text" class="form-control" id="clientAddress" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary-custom w-100">
+                                    <i class="fas fa-plus me-2"></i>
+                                    Registrar Cliente
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="table-card">
+                            <h4 class="mb-3">
+                                <i class="fas fa-users text-primary me-2"></i>
+                                Clientes Registrados
+                            </h4>
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Tipo</th>
+                                            <th>Documento</th>
+                                            <th>Nombre</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="clientsTableBody">
+                                        <tr>
+                                            <td colspan="4" class="text-center">Cargando clientes...</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="loans-section" class="page-section">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-card">
+                            <h4>
+                                <i class="fas fa-money-bill-wave text-primary me-2"></i>
+                                Registrar Nuevo Préstamo
+                            </h4>
+                            <form id="loanForm">
+                                <div class="mb-3">
+                                    <label class="form-label">Cliente</label>
+                                    <select class="form-select" id="loanClientSelect" required>
+                                        <option value="">Cargando clientes...</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Monto del Préstamo</label>
+                                    <input type="number" class="form-control" id="loanAmount" step="1000" required>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label">Número de Cuotas</label>
+                                        <input type="number" class="form-control" id="loanInstallments" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Tasa de Interés (%)</label>
+                                        <input type="number" class="form-control" id="loanInterestRate" step="0.1" required>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-warning-custom w-100 mb-3" onclick="calculatePaymentPlan()">
+                                    <i class="fas fa-calculator me-2"></i>
+                                    Calcular Plan de Pagos
+                                </button>
+                                <button type="submit" class="btn btn-primary-custom w-100" id="createLoanBtn" disabled>
+                                    <i class="fas fa-plus me-2"></i>
+                                    Crear Préstamo
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card form-card" id="paymentPlanCard" style="display: none;">
+                            <h4 class="card-title">Plan de Pagos</h4>
+                            <div class="table-responsive">
+                                <table class="table table-sm payment-plan-table">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Capital</th>
+                                            <th>Interés</th>
+                                            <th>Total</th>
+                                            <th>Saldo</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="paymentPlanTable">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="table-card">
+                            <h4 class="mb-3">
+                                <i class="fas fa-money-bill-wave text-primary me-2"></i>
+                                Préstamos Activos
+                            </h4>
+                            <div id="activeLoansContainer">
+                                <p class="text-muted text-center">Cargando préstamos...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="payments-section" class="page-section">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-card">
+                            <h4>
+                                <i class="fas fa-credit-card text-primary me-2"></i>
+                                Registrar Pago
+                            </h4>
+                            <form id="paymentForm">
+                                <div class="mb-3">
+                                    <label class="form-label">Préstamo</label>
+                                    <select class="form-select" id="paymentLoanSelect" required onchange="populateInstallments()">
+                                        <option value="">Cargando préstamos...</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Tipo de Pago</label>
+                                    <select class="form-select" id="paymentType" required onchange="handlePaymentTypeChange()">
+                                        <option value="">Seleccionar tipo...</option>
+                                        <option value="cuota">Pago de Cuota</option>
+                                        <option value="abono">Abono a Capital</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3" id="installmentNumberDiv" style="display: none;">
+                                    <label class="form-label">Número de Cuota</label>
+                                    <select class="form-select" id="installmentNumber">
+                                        <option value="">Seleccionar cuota...</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Monto del Pago</label>
+                                    <input type="number" class="form-control" id="paymentAmount" step="1000" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary-custom w-100">
+                                    <i class="fas fa-check-circle me-2"></i>
+                                    Registrar Pago
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="table-card">
+                            <h4 class="mb-3">
+                                <i class="fas fa-history text-primary me-2"></i>
+                                Historial de Pagos
+                            </h4>
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>ID Préstamo</th>
+                                            <th>Fecha</th>
+                                            <th>Monto</th>
+                                            <th>Tipo</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="paymentsTableBody">
+                                        <tr>
+                                            <td colspan="4" class="text-center">Cargando historial...</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="contracts-section" class="page-section">
+                <div class="table-card">
+                    <h4 class="mb-3">
+                        <i class="fas fa-file-contract text-primary me-2"></i>
+                        Contratos
+                    </h4>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID Contrato</th>
+                                    <th>Cliente</th>
+                                    <th>Monto</th>
+                                    <th>Fecha</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="contractsTable">
+                                <tr>
+                                    <td colspan="6" class="text-center">Cargando contratos...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="reports-section" class="page-section">
+                <div class="card form-card text-center">
+                    <h4 class="mb-4">
+                        <i class="fas fa-chart-bar text-primary me-2"></i>
+                        Generar Reportes
+                    </h4>
+                    <p class="text-muted">
+                        Esta sección te permitirá generar reportes detallados sobre el estado de los préstamos, pagos y clientes.
+                    </p>
+                    <button class="btn btn-primary-custom w-50 mx-auto">
+                        <i class="fas fa-download me-2"></i>
+                        Generar Reporte de Préstamos
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade" id="clientModal" tabindex="-1" aria-labelledby="clientModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="clientModalLabel">Detalles del Cliente</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="clientDetailsContent">
+                        <p class="text-center text-muted">Cargando...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="loanModal" tabindex="-1" aria-labelledby="loanModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loanModalLabel">Detalles del Préstamo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="loanDetailsContent">
+                        <p class="text-center text-muted">Cargando...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade" id="contractModal" tabindex="-1" aria-labelledby="contractModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="contractModalLabel">Contrato de Préstamo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="contractContent">
+                    <p class="text-center text-muted">Cargando contrato...</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary-custom" onclick="downloadContract()">
+                        <i class="fas fa-download me-2"></i> Descargar PDF
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+        <div class="loading-spinner">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Cargando...</span>
+            </div>
+            <p class="mt-3 text-muted">Cargando...</p>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const googleAppsScriptUrl = 'https://script.google.com/macros/s/AKfycbxCILJhPhwUWLdc1ws6THP2UUkL7z8SwJbl5yPU6Lc6yRXoJcBmqqyofI9MCKjNfBFygg/exec'; // Reemplaza con tu URL
+        let activityCheckInterval;
+        let sessionToken = localStorage.getItem('sessionToken');
+        let currentPaymentPlan = [];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const username = localStorage.getItem('username');
+            if (!username) {
+                window.location.href = 'login.html'; // Redirigir al login si no hay sesión
+                return;
+            }
+            document.getElementById('welcomeUser').textContent = username;
+
+            // Manejar la navegación del sidebar
+            document.querySelectorAll('.menu-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const sectionId = e.target.closest('a').getAttribute('data-section');
+                    document.querySelectorAll('.page-section').forEach(section => {
+                        section.classList.remove('active');
+                    });
+                    document.getElementById(`${sectionId}-section`).classList.add('active');
+                    document.getElementById('pageTitle').textContent = e.target.closest('a').querySelector('span').textContent;
+                    document.querySelectorAll('.menu-link').forEach(l => l.classList.remove('active'));
+                    e.target.closest('a').classList.add('active');
+
+                    // Cargar datos específicos de la sección
+                    switch (sectionId) {
+                        case 'dashboard':
+                            loadDashboardData();
+                            break;
+                        case 'clients':
+                            loadClients();
+                            break;
+                        case 'loans':
+                            loadClientsForSelect();
+                            loadActiveLoans();
+                            break;
+                        case 'payments':
+                            loadActiveLoansForPayment();
+                            loadRecentPayments();
+                            break;
+                        case 'contracts':
+                            loadContracts();
+                            break;
+                        case 'reports':
+                            // Lógica para reportes
+                            break;
+                    }
+                });
+            });
+
+            // Cargar datos iniciales del dashboard
+            loadDashboardData();
+            startActivityTracking();
+
+            // Event Listeners para formularios
+            document.getElementById('clientForm').addEventListener('submit', handleClientSubmit);
+            document.getElementById('loanForm').addEventListener('submit', handleLoanSubmit);
+            document.getElementById('paymentForm').addEventListener('submit', handlePaymentSubmit);
+        });
+
+        // Funciones de navegación y UI
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            sidebar.classList.toggle('collapsed');
+            mainContent.classList.toggle('expanded');
+        }
+
+        async function loadDashboardData() {
+            try {
+                const response = await makeRequest('getDashboardData');
+                if (response.success) {
+                    const data = response.data;
+                    document.getElementById('totalLoansCount').textContent = data.totalLoans;
+                    document.getElementById('highestLoan').textContent = formatCurrency(data.highestLoan);
+                    document.getElementById('totalEarnings').textContent = formatCurrency(data.totalEarnings);
+                    document.getElementById('totalClients').textContent = data.totalClients;
+                    loadRecentPayments();
+                } else {
+                    showAlert(response.message, 'danger');
+                }
+            } catch (error) {
+                console.error('Error loading dashboard data:', error);
+                showAlert('Error al cargar datos del dashboard.', 'danger');
+            }
+        }
+
+        // Client Management
+        async function handleClientSubmit(e) {
+            e.preventDefault();
+            
+            const formData = {
+                docType: document.getElementById('clientDocType').value,
+                docNumber: document.getElementById('clientDocNumber').value,
+                fullName: document.getElementById('clientFullName').value,
+                phone: document.getElementById('clientPhone').value,
+                address: document.getElementById('clientAddress').value
+            };
+
+            try {
+                const response = await makeRequest('createClient', formData);
+                if (response.success) {
+                    showAlert('Cliente registrado exitosamente', 'success');
+                    document.getElementById('clientForm').reset();
+                    loadClients();
+                    loadClientsForSelect();
+                    loadDashboardData();
+                } else {
+                    showAlert(response.message, 'danger');
+                }
+            } catch (error) {
+                console.error('Error creating client:', error);
+                showAlert('Error registrando cliente', 'danger');
+            }
+        }
+
+        async function loadClients() {
+            try {
+                const response = await makeRequest('getClients');
+                if (response.success) {
+                    const tbody = document.getElementById('clientsTableBody');
+                    tbody.innerHTML = '';
+                    if (response.data.clients.length === 0) {
+                        tbody.innerHTML = '<tr><td colspan="4" class="text-center">No hay clientes registrados.</td></tr>';
+                        return;
+                    }
+                    response.data.clients.forEach(client => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${client[0]}</td>
+                            <td>${client[1]}</td>
+                            <td>${client[2]}</td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-primary" onclick="viewClient('${client[1]}')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </td>
+                        `;
+                        tbody.appendChild(row);
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading clients:', error);
+            }
+        }
+
+        async function loadClientsForSelect() {
+            try {
+                const response = await makeRequest('getClients');
+                
+                if (response.success) {
+                    const select = document.getElementById('loanClientSelect');
+                    select.innerHTML = '<option value="">Seleccionar cliente...</option>';
+                    
+                    response.data.clients.forEach(client => {
+                        const option = document.createElement('option');
+                        option.value = client[1]; // Document number
+                        option.textContent = `${client[1]} - ${client[2]}`; // Doc + Name
+                        select.appendChild(option);
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading clients for select:', error);
+            }
+        }
+
+        // Loan Management
+        function calculatePaymentPlan() {
+            const amount = parseFloat(document.getElementById('loanAmount').value);
+            const installments = parseInt(document.getElementById('loanInstallments').value);
+            const interestRate = parseFloat(document.getElementById('loanInterestRate').value);
+
+            if (isNaN(amount) || isNaN(installments) || isNaN(interestRate) || amount <= 0 || installments <= 0 || interestRate < 0) {
+                showAlert('Por favor, ingrese valores válidos para calcular el plan de pagos.', 'warning');
+                return;
+            }
+
+            const monthlyCapital = amount / installments;
+            const paymentPlan = [];
+            let remainingBalance = amount;
+
+            for (let i = 1; i <= installments; i++) {
+                const interestAmount = (remainingBalance * interestRate) / 100;
+                const totalPayment = monthlyCapital + interestAmount;
+                remainingBalance -= monthlyCapital;
+
+                paymentPlan.push({
+                    installment: i,
+                    capital: monthlyCapital,
+                    interest: interestAmount,
+                    total: totalPayment,
+                    remainingBalance: Math.max(0, remainingBalance)
+                });
+            }
+
+            currentPaymentPlan = paymentPlan;
+            displayPaymentPlan(paymentPlan);
+            document.getElementById('createLoanBtn').disabled = false;
+        }
+
+        function displayPaymentPlan(plan) {
+            const tableBody = document.getElementById('paymentPlanTable');
+            tableBody.innerHTML = '';
+            plan.forEach(p => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${p.installment}</td>
+                    <td>${formatCurrency(p.capital)}</td>
+                    <td>${formatCurrency(p.interest)}</td>
+                    <td>${formatCurrency(p.total)}</td>
+                    <td>${formatCurrency(p.remainingBalance)}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+            document.getElementById('paymentPlanCard').style.display = 'block';
+        }
+
+        async function handleLoanSubmit(e) {
+            e.preventDefault();
+
+            const formData = {
+                clientId: document.getElementById('loanClientSelect').value,
+                amount: parseFloat(document.getElementById('loanAmount').value),
+                installments: parseInt(document.getElementById('loanInstallments').value),
+                interestRate: parseFloat(document.getElementById('loanInterestRate').value)
+            };
+
+            try {
+                const response = await makeRequest('createLoan', formData);
+                if (response.success) {
+                    showAlert(`Préstamo creado exitosamente. ID: ${response.data.loanId}`, 'success');
+                    document.getElementById('loanForm').reset();
+                    document.getElementById('paymentPlanCard').style.display = 'none';
+                    document.getElementById('createLoanBtn').disabled = true;
+                    loadActiveLoans();
+                    loadDashboardData();
+                } else {
+                    showAlert(response.message, 'danger');
+                }
+            } catch (error) {
+                console.error('Error creating loan:', error);
+                showAlert('Error creando préstamo', 'danger');
+            }
+        }
+
+        async function loadActiveLoans() {
+            try {
+                const response = await makeRequest('getLoans');
+
+                if (response.success) {
+                    const container = document.getElementById('activeLoansContainer');
+                    container.innerHTML = '';
+                    const loans = response.data.loans.filter(loan => loan[6] === 'activo');
+
+                    if (loans.length === 0) {
+                        container.innerHTML = '<p class="text-muted text-center">No hay préstamos activos.</p>';
+                        return;
+                    }
+
+                    loans.forEach(loan => {
+                        const card = document.createElement('div');
+                        card.classList.add('card', 'mb-3');
+                        card.innerHTML = `
+                            <div class="card-body">
+                                <h5 class="card-title">${loan[0]}</h5>
+                                <p class="card-text">
+                                    <strong>Cliente:</strong> ${loan[1]} <br>
+                                    <strong>Monto:</strong> ${formatCurrency(loan[3])} <br>
+                                    <strong>Cuotas:</strong> ${loan[4]} <br>
+                                    <strong>Saldo:</strong> ${formatCurrency(loan[8])}
+                                </p>
+                                <button class="btn btn-sm btn-outline-primary" onclick="viewLoan('${loan[0]}')">
+                                    <i class="fas fa-eye me-1"></i>Ver Detalles
+                                </button>
+                            </div>
+                        `;
+                        container.appendChild(card);
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading active loans:', error);
+            }
+        }
+
+        async function loadActiveLoansForPayment() {
+            try {
+                const response = await makeRequest('getLoans');
+
+                if (response.success) {
+                    const select = document.getElementById('paymentLoanSelect');
+                    select.innerHTML = '<option value="">Seleccionar préstamo...</option>';
+                    const loans = response.data.loans.filter(loan => loan[6] === 'activo');
+
+                    loans.forEach(loan => {
+                        const option = document.createElement('option');
+                        option.value = loan[0]; // Loan ID
+                        option.textContent = `ID: ${loan[0]} - Saldo: ${formatCurrency(loan[8])}`;
+                        select.appendChild(option);
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading active loans for payment:', error);
+            }
+        }
+
+        // Payment Management
+        function handlePaymentTypeChange() {
+            const paymentType = document.getElementById('paymentType').value;
+            const installmentDiv = document.getElementById('installmentNumberDiv');
+            const installmentSelect = document.getElementById('installmentNumber');
+
+            if (paymentType === 'cuota') {
+                installmentDiv.style.display = 'block';
+                installmentSelect.setAttribute('required', 'required');
+                populateInstallments();
+            } else {
+                installmentDiv.style.display = 'none';
+                installmentSelect.removeAttribute('required');
+            }
+        }
+
+        async function populateInstallments() {
+            const loanId = document.getElementById('paymentLoanSelect').value;
+            const installmentSelect = document.getElementById('installmentNumber');
+            installmentSelect.innerHTML = '<option value="">Seleccionar cuota...</option>';
+
+            if (!loanId) return;
+
+            try {
+                const response = await makeRequest('getLoans', { clientId: '' });
+                if (response.success) {
+                    const loan = response.data.loans.find(l => l[0] === loanId);
+                    if (loan) {
+                        const paymentPlan = JSON.parse(loan[7]);
+                        paymentPlan.forEach(p => {
+                            if (p.status === 'pendiente') {
+                                const option = document.createElement('option');
+                                option.value = p.installment;
+                                option.textContent = `Cuota #${p.installment} - Total: ${formatCurrency(p.total)}`;
+                                installmentSelect.appendChild(option);
+                            }
+                        });
+                    }
+                }
+            } catch (error) {
+                console.error('Error populating installments:', error);
+            }
+        }
+
+        async function handlePaymentSubmit(e) {
+            e.preventDefault();
+
+            const formData = {
+                loanId: document.getElementById('paymentLoanSelect').value,
+                paymentType: document.getElementById('paymentType').value,
+                amount: parseFloat(document.getElementById('paymentAmount').value),
+                installmentNumber: document.getElementById('installmentNumber').value || null
+            };
+
+            try {
+                const response = await makeRequest('registerPayment', formData);
+                if (response.success) {
+                    showAlert('Pago registrado exitosamente', 'success');
+                    document.getElementById('paymentForm').reset();
+                    document.getElementById('installmentNumberDiv').style.display = 'none';
+                    loadActiveLoansForPayment();
+                    loadRecentPayments();
+                    loadDashboardData();
+                } else {
+                    showAlert(response.message, 'danger');
+                }
+            } catch (error) {
+                console.error('Error registering payment:', error);
+                showAlert('Error registrando pago', 'danger');
+            }
+        }
+
+        async function loadRecentPayments() {
+            try {
+                const paymentsResponse = await makeRequest('getClientPayments', { clientId: 'all' });
+                const clientsResponse = await makeRequest('getClients');
+                const loansResponse = await makeRequest('getLoans');
+
+                if (paymentsResponse.success && clientsResponse.success && loansResponse.success) {
+                    const payments = paymentsResponse.data.payments;
+                    const clients = clientsResponse.data.clients;
+                    const loans = loansResponse.data.loans;
+                    const tableBody = document.getElementById('recentActivityTable');
+                    tableBody.innerHTML = '';
+
+                    if (payments.length === 0) {
+                        tableBody.innerHTML = '<tr><td colspan="4" class="text-center">No hay actividad reciente.</td></tr>';
+                        return;
+                    }
+
+                    const recentPayments = payments.sort((a, b) => new Date(b[2]) - new Date(a[2])).slice(0, 10);
+
+                    recentPayments.forEach(payment => {
+                        const loan = loans.find(l => l[0] === payment[1]);
+                        const client = loan ? clients.find(c => c[1] === loan[1]) : null;
+
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${client ? client[2] : 'Desconocido'}</td>
+                            <td>Pago de ${payment[3]}</td>
+                            <td>${formatCurrency(payment[4])}</td>
+                            <td>${new Date(payment[2]).toLocaleString()}</td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading recent payments:', error);
+            }
+        }
+
+        // Contracts Management
+        async function loadContracts() {
+            try {
+                const loansResponse = await makeRequest('getLoans');
+                const clientsResponse = await makeRequest('getClients');
+
+                if (loansResponse.success && clientsResponse.success) {
+                    const loans = loansResponse.data.loans;
+                    const clients = clientsResponse.data.clients;
+                    const tableBody = document.getElementById('contractsTable');
+                    tableBody.innerHTML = '';
+
+                    if (loans.length === 0) {
+                        tableBody.innerHTML = '<tr><td colspan="6" class="text-center">No hay contratos para mostrar.</td></tr>';
+                        return;
+                    }
+
+                    loans.forEach(loan => {
+                        const client = clients.find(c => c[1] === loan[1]);
+                        const row = document.createElement('tr');
+                        const statusClass = loan[6] === 'activo' ? 'status-active' : 'status-paid';
+                        const statusText = loan[6] === 'activo' ? 'Activo' : 'Pagado';
+
+                        row.innerHTML = `
+                            <td>${loan[0]}</td>
+                            <td>${client ? client[2] : 'Desconocido'}</td>
+                            <td>${formatCurrency(loan[3])}</td>
+                            <td>${new Date(loan[2]).toLocaleDateString()}</td>
+                            <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-primary-custom" onclick="showContractModal('${loan[0]}')">
+                                    <i class="fas fa-file-pdf me-1"></i>Generar
+                                </button>
+                            </td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading contracts:', error);
+            }
+        }
+
+        async function showContractModal(loanId) {
+            try {
+                const response = await makeRequest('generateContract', { loanId });
+
+                if (response.success) {
+                    const contract = response.data.contract;
+                    const contentDiv = document.getElementById('contractContent');
+                    contentDiv.innerHTML = `
+                        <div class="contract-preview">
+                            <h3 class="text-center">CONTRATO DE PRÉSTAMO</h3>
+                            <hr>
+                            <p><strong>Número de Contrato:</strong> ${contract.loanId}</p>
+                            <p><strong>Fecha:</strong> ${new Date(contract.date).toLocaleDateString()}</p>
+                            <hr>
+                            <h5>Información del Cliente</h5>
+                            <p><strong>Nombre Completo:</strong> ${contract.clientName}</p>
+                            <p><strong>Documento:</strong> ${contract.clientDoc}</p>
+                            <hr>
+                            <h5>Detalles del Préstamo</h5>
+                            <p><strong>Monto Prestado:</strong> ${formatCurrency(contract.amount)}</p>
+                            <p><strong>Número de Cuotas:</strong> ${contract.installments}</p>
+                            <p><strong>Tasa de Interés:</strong> ${contract.interestRate}%</p>
+                            <hr>
+                            <h5>Plan de Pagos</h5>
+                            <div class="table-responsive">
+                                <table class="table table-sm payment-plan-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Cuota</th>
+                                            <th>Capital</th>
+                                            <th>Interés</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        ${contract.paymentPlan.map(p => `
+                                            <tr>
+                                                <td>${p.installment}</td>
+                                                <td>${formatCurrency(p.capital)}</td>
+                                                <td>${formatCurrency(p.interest)}</td>
+                                                <td>${formatCurrency(p.total)}</td>
+                                            </tr>
+                                        `).join('')}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    `;
+                    const contractModal = new bootstrap.Modal(document.getElementById('contractModal'));
+                    contractModal.show();
+                } else {
+                    showAlert(response.message, 'danger');
+                }
+            } catch (error) {
+                console.error('Error generating contract:', error);
+                showAlert('Error generando contrato', 'danger');
+            }
+        }
+
+        function downloadContract() {
+            showAlert('Funcionalidad de descarga de PDF no implementada.', 'info');
+        }
+
+        // Utility Functions
+        function formatCurrency(value) {
+            return new Intl.NumberFormat('es-CO', {
+                style: 'currency',
+                currency: 'COP',
+                minimumFractionDigits: 0
+            }).format(value);
+        }
+
+        function showAlert(message, type = 'info') {
+            const alertPlaceholder = document.getElementById('alertsList');
+            const wrapper = document.createElement('div');
+            wrapper.innerHTML = `
+                <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                    <i class="fas fa-info-circle me-2"></i>
+                    ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            `;
+            alertPlaceholder.appendChild(wrapper);
+
+            // Auto-dismiss after 5 seconds
+            setTimeout(() => {
+                const alert = bootstrap.Alert.getOrCreateInstance(wrapper.querySelector('.alert'));
+                alert.close();
+            }, 5000);
+        }
+
+        function toggleLoading(show) {
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            loadingOverlay.style.display = show ? 'flex' : 'none';
+        }
+
+        async function makeRequest(action, data = {}) {
+            toggleLoading(true);
+            const url = 'https://script.google.com/macros/s/AKfycbxCILJhPhwUWLdc1ws6THP2UUkL7z8SwJbl5yPU6Lc6yRXoJcBmqqyofI9MCKjNfBFygg/exec';
+            const form = new FormData();
+            form.append('payload', JSON.stringify({ ...data, action, sessionToken }));
+
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    body: form
+                });
+
+                const result = await response.json();
+                toggleLoading(false);
+                return result;       // <-- ahora sí devuelve lo que envía Apps Script
+            } catch (error) {
+                console.error('Request failed:', error);
+                toggleLoading(false);
+                return { success: false, message: 'Error de conexión' };
+            }
+        }
+        
+        // Session and Logout
+        function startActivityTracking() {
+            activityCheckInterval = setInterval(async () => {
+                // Esta es una verificación ligera para la validez de la sesión
+                if (!localStorage.getItem('sessionToken')) {
+                    showAlert('Sesión expirada. Por favor, inicie sesión de nuevo.', 'warning');
+                    setTimeout(() => window.location.href = 'login.html', 2000);
+                    clearInterval(activityCheckInterval);
+                }
+            }, 30000); // Verificar cada 30 segundos
+        }
+
+        async function logout() {
+            await makeRequest('logout', { sessionToken });
+            localStorage.removeItem('sessionToken');
+            localStorage.removeItem('username');
+            clearInterval(activityCheckInterval);
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>

@@ -1,53 +1,266 @@
+let selectedUserType = 'admin';
+let sessionToken = null;
 
-// 1. Bloquer clic derecho
-window.addEventListener('contextmenu', e => e.preventDefault());
-
-// 2. Bloquea clic izquierdo fuera de campos permitidos
-window.addEventListener('mousedown', e => {
-  if (e.button === 0 && !['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) {
-    e.preventDefault();
-  }
+// Initialize
+document.addEventListener('DOMContentLoaded', function() {
+    initializeUserTypeSelector();
+    initializeLoginForm();
+    initializeRecoveryForm();
+    preventBackButton();
 });
 
-// 3. Bloquea teclas especiales y combinaciones peligrosas
-window.addEventListener('keydown', e => {
-  const key = e.key.toLowerCase();
-  const tag = e.target.tagName;
+// User Type Selection
+function initializeUserTypeSelector() {
+    const userTypeCards = document.querySelectorAll('.user-type-card');
+    
+    userTypeCards.forEach(card => {
+        card.addEventListener('click', function() {
+            // Remove active class from all cards
+            userTypeCards.forEach(c => c.classList.remove('active'));
+            
+            // Add active class to selected card
+            this.classList.add('active');
+            
+            // Update selected type
+            selectedUserType = this.dataset.type;
+            
+            // Update form placeholders
+            updateFormPlaceholders();
+        });
+    });
+    
+    // Set default selection
+    userTypeCards[0].classList.add('active');
+    updateFormPlaceholders();
+}
 
-  // Lista de teclas individuales (F keys) para bloquear
-  const individualBlockedKeys = [
-    'f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7', 'f8', 'f9', 'f10', 'f11', 'f12'
-  ];
+function updateFormPlaceholders() {
+    const usernameInput = document.getElementById('username');
+    const usernameLabel = usernameInput.nextElementSibling;
+    
+    if (selectedUserType === 'admin') {
+        usernameInput.placeholder = 'Usuario administrador';
+        usernameLabel.innerHTML = '<i class="fas fa-user-shield me-2"></i>Usuario';
+    } else {
+        usernameInput.placeholder = 'Número de documento';
+        usernameLabel.innerHTML = '<i class="fas fa-id-card me-2"></i>Número de Documento';
+    }
+}
 
-  // Lista de caracteres para bloquear en combinación con Ctrl/Shift/Alt
-  const combinationBlockedCharacters = [
-    'u', 'i', 's', 'c', 'e', 'j', 'k', 'a', 'd', 'h', // Example: Ctrl+U (view source), Ctrl+Shift+I (devtools), Ctrl+S (save)
-    'p', // Ctrl+P (print)
-    'g', // Ctrl+G (find next)
-    'x', 'v' // Ctrl+X (cut), Ctrl+V (paste) - Use with caution, as this can affect user input
-  ];
+// Login Form
+function initializeLoginForm() {
+    const loginForm = document.getElementById('loginForm');
+    
+    loginForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const username = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value;
+        
+        if (!username || !password) {
+            showAlert('Por favor completa todos los campos', 'warning');
+            return;
+        }
+        
+        await performLogin(username, password);
+    });
+}
 
-  // Check for individual blocked keys (like F keys)
-  if (individualBlockedKeys.includes(key)) {
-    e.preventDefault();
-  }
+async function performLogin(username, password) {
+    const btn = document.querySelector('.btn-login');
+    const loginText = btn.querySelector('.login-text');
+    const spinner = btn.querySelector('.loading-spinner');
+    
+    // Show loading state
+    btn.disabled = true;
+    loginText.style.display = 'none';
+    spinner.style.display = 'inline';
+    
+    try {
+        const response = await fetch('https://script.google.com/macros/s/AKfycby7NYD_Yt6rH5DBMY-H9tj91aJ6uoBFmf_t8JxXypFNByFP2zDwd7-janofBK23Pca3Iw/exec', { 
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                action: 'login',
+                username: username,
+                password: password,
+                userType: selectedUserType
+            })
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            sessionToken = result.data.sessionToken;
+            localStorage.setItem('sessionToken', sessionToken);
+            localStorage.setItem('userType', result.data.userType);
+            localStorage.setItem('username', result.data.username);
+            
+            showAlert('Inicio de sesión exitoso. Redirigiendo...', 'success');
+            
+            setTimeout(() => {
+                window.location.href = result.data.redirectUrl;
+            }, 1500);
+        } else {
+            showAlert(result.message || 'Error en el inicio de sesión', 'danger');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        showAlert('Error de conexión. Inténtalo de nuevo.', 'danger');
+    } finally {
+        // Reset button state
+        btn.disabled = false;
+        loginText.style.display = 'inline';
+        spinner.style.display = 'none';
+    }
+}
 
-  // Check for blocked combinations (Ctrl/Shift/Alt + specific character)
-  // Ensure that the key is NOT a modifier itself to avoid blocking Ctrl, Shift, Alt independently
-  if (
-    (e.ctrlKey || e.shiftKey || e.altKey || e.metaKey) && // Any modifier key is pressed
-    !['control', 'alt', 'meta', 'shift'].includes(key) && // The pressed key is not a modifier itself
-    combinationBlockedCharacters.includes(key) // The pressed key is in our combination blocked list
-  ) {
-    e.preventDefault();
-  }
+// Password Recovery
+function initializeRecoveryForm() {
+    const btnRecover = document.getElementById('btnRecoverPassword');
+    
+    btnRecover.addEventListener('click', async function() {
+        const form = document.getElementById('recoveryForm');
+        const formData = new FormData(form);
+        
+        const data = {
+            docType: document.getElementById('recDocType').value,
+            docNumber: document.getElementById('recDocNumber').value,
+            fullName: document.getElementById('recFullName').value,
+            phone: document.getElementById('recPhone').value,
+            favoriteColor: document.getElementById('recFavoriteColor').value,
+            favoriteAnimal: document.getElementById('recFavoriteAnimal').value
+        };
+        
+        // Validate form
+        if (!data.docType || !data.docNumber || !data.fullName || 
+            !data.phone || !data.favoriteColor || !data.favoriteAnimal) {
+            showAlert('Por favor completa todos los campos', 'warning');
+            return;
+        }
+        
+        await performPasswordRecovery(data);
+    });
+}
 
-  // Previene Backspace/Delete fuera de inputs
-  if ((key === 'delete' || key === 'backspace') && !['INPUT', 'TEXTAREA'].includes(tag)) {
-    e.preventDefault();
-  }
+async function performPasswordRecovery(data) {
+    const btn = document.getElementById('btnRecoverPassword');
+    const originalText = btn.innerHTML;
+    
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Verificando...';
+    
+    try {
+        // CORREGIDO: Usar la misma URL que la función de login
+        const response = await fetch('https://script.google.com/macros/s/AKfycbxoMvh8i01-6aYtSWtuQODde2GQe1y1OlDBBXOYIwhr0_3ntewGv5L2EtCgPqpbczgDfQ/exec', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                action: 'recoverPassword',
+                ...data
+            })
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            document.getElementById('recoveredUsername').textContent = result.data.username;
+            document.getElementById('recoveredPassword').textContent = result.data.password;
+            document.getElementById('recoveryResult').style.display = 'block';
+            
+            showAlert('Contraseña recuperada exitosamente', 'success');
+        } else {
+            showAlert(result.message || 'Información no válida', 'danger');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        showAlert('Error de conexión. Inténtalo de nuevo.', 'danger');
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+    }
+}
+
+// Alert System
+function showAlert(message, type = 'info') {
+    const alertContainer = document.getElementById('alertContainer');
+    const alertId = 'alert-' + Date.now();
+    
+    const alertHTML = `
+        <div id="${alertId}" class="alert alert-${type} alert-custom alert-dismissible fade show" role="alert">
+            <div class="d-flex align-items-center">
+                <i class="fas fa-${getAlertIcon(type)} me-2"></i>
+                <div>${message}</div>
+                <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert"></button>
+            </div>
+        </div>
+    `;
+    
+    alertContainer.innerHTML = alertHTML;
+    
+    // Auto dismiss after 5 seconds
+    setTimeout(() => {
+        const alert = document.getElementById(alertId);
+        if (alert) {
+            const bsAlert = new bootstrap.Alert(alert);
+            bsAlert.close();
+        }
+    }, 5000);
+}
+
+function getAlertIcon(type) {
+    const icons = {
+        success: 'check-circle',
+        danger: 'exclamation-triangle',
+        warning: 'exclamation-circle',
+        info: 'info-circle'
+    };
+    return icons[type] || 'info-circle';
+}
+
+// Security Functions
+function preventBackButton() {
+    window.history.pushState(null, null, window.location.href);
+    
+    window.addEventListener('popstate', function() {
+        window.history.pushState(null, null, window.location.href);
+        showAlert('Por favor usa los controles de navegación del sistema', 'warning');
+    });
+}
+
+// Session Management
+function checkExistingSession() {
+    const token = localStorage.getItem('sessionToken');
+    const userType = localStorage.getItem('userType');
+    
+    if (token && userType) {
+        // Redirect to appropriate dashboard
+        const redirectUrl = userType === 'admin' ? '?page=admin' : '?page=client';
+        window.location.href = redirectUrl;
+    }
+}
+
+// Check for existing session on load
+checkExistingSession();
+
+// Handle browser refresh
+window.addEventListener('beforeunload', function() {
+    // Clear sensitive data if not properly logged in
+    if (!sessionToken) {
+        localStorage.removeItem('sessionToken');
+        localStorage.removeItem('userType');
+        localStorage.removeItem('username');
+    }
 });
 
-// 4. Protección para móviles (esto evita la selección y el copiado)
-document.addEventListener('selectstart', e => e.preventDefault());
-document.addEventListener('copy', e => e.preventDefault());
+// Security: Clear localStorage on tab close
+window.addEventListener('unload', function() {
+    if (!sessionToken) {
+        localStorage.clear();
+    }
+
+});

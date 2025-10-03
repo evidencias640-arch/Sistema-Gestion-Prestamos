@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestión de Préstamos - Login</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --success-color: #27ae60;
+            --danger-color: #e74c3c;
+            --warning-color: #f39c12;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+            padding: 40px;
+            max-width: 450px;
+            width: 100%;
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            width: 100px;
+            height: 100px;
+            background-color: var(--secondary-color);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2.5rem;
+            box-shadow: 0 0 15px rgba(52, 152, 219, 0.5);
+            border: 5px solid white;
+        }
+
+        .user-type-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .user-type-card {
+            flex: 1;
+            text-align: center;
+            padding: 15px;
+            border-radius: 12px;
+            background-color: #f1f1f1;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .user-type-card:hover {
+            background-color: #e2e6ea;
+            transform: translateY(-3px);
+        }
+
+        .user-type-card.active {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-floating>label {
+            color: #6c757d;
+        }
+
+        .form-control:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25);
+        }
+
+        .btn-primary-custom {
+            background: linear-gradient(135deg, var(--secondary-color), #2980b9);
+            border: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        .forgot-password {
+            font-size: 0.9rem;
+            text-align: right;
+            margin-top: 10px;
+        }
+
+        .forgot-password a {
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+
+        /* Password Toggle */
+        .password-container {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            top: 50%;
+            right: 15px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #6c757d;
+        }
+
+        /* Modal Recovery Styles */
+        .recovery-modal .modal-header {
+            background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            border-bottom: none;
+            border-top-left-radius: 18px;
+            border-top-right-radius: 18px;
+        }
+
+        .recovery-modal .modal-content {
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .recovery-modal .modal-title {
+            font-weight: bold;
+        }
+
+        .recovery-modal .btn-close {
+            filter: invert(1) grayscale(100%) brightness(200%);
+        }
+
+        .recovery-modal .modal-footer {
+            border-top: none;
+        }
+
+        .recovery-modal .form-control,
+        .recovery-modal .form-select {
+            border-color: #ddd;
+        }
+
+        .recovery-modal .form-control:focus,
+        .recovery-modal .form-select:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25);
+        }
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 576px) {
+            .login-card {
+                padding: 30px;
+            }
+
+            .logo {
+                width: 80px;
+                height: 80px;
+                font-size: 2rem;
+            }
+
+            .user-type-selector {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .user-type-card {
+                padding: 12px;
+            }
+
+            .modal-dialog {
+                margin: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-container">
+        <div class="login-card">
+            <div class="logo-container">
+                <div class="logo">
+                    <i class="fas fa-lock"></i>
+                </div>
+            </div>
+            <h2 class="text-center mb-4 text-primary">Iniciar Sesión</h2>
+            <p class="logo-subtitle">Sistema de Gestión de Préstamos</p>
+
+
+            <div class="user-type-selector">
+                <div class="user-type-card active" data-type="admin">
+                    <i class="fas fa-user-shield me-2"></i>
+                    Administrador
+                </div>
+                <div class="user-type-card" data-type="client">
+                    <i class="fas fa-user me-2"></i>
+                    Cliente
+                </div>
+            </div>
+
+            <div id="alertsList"></div>
+
+            <form id="loginForm">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="username" placeholder="Usuario administrador" required>
+                    <label for="username"><i class="fas fa-user-shield me-2"></i>Usuario</label>
+                </div>
+                <div class="form-floating mb-3 password-container">
+                    <input type="password" class="form-control" id="password" placeholder="Contraseña" required>
+                    <label for="password"><i class="fas fa-lock me-2"></i>Contraseña</label>
+                    <span class="password-toggle"><i class="fas fa-eye" id="togglePassword"></i></span>
+                </div>
+                <button type="submit" class="btn btn-primary-custom w-100 py-3 mt-2" id="btnLogin">
+                    <i class="fas fa-sign-in-alt me-2"></i>Iniciar Sesión
+                </button>
+            </form>
+
+            <div id="forgotPasswordContainer" class="forgot-password" style="display:none;">
+                <a href="#" data-bs-toggle="modal" data-bs-target="#recoveryModal">
+                    ¿Olvidaste tu contraseña - Recuperala?
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal fade recovery-modal" id="recoveryModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-key me-2"></i>Recuperar Contraseña
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted mb-4">
+                        Completa la siguiente información para recuperar tu contraseña:
+                    </p>
+
+                    <form id="recoveryForm">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <select class="form-select" id="recDocType" required>
+                                        <option value="">Seleccionar</option>
+                                        <option value="CC" selected>Cédula de Ciudadanía</option>
+                                        <option value="CE" selected>Cédula de Extranjería</option>
+                                        <option value="TI" selected>Tarjeta de Identidad</option>
+                                        <option value="PPT" selected>Pasaporte</option>
+                                    </select>
+                                    <label for="recDocType">Tipo de Documento</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="recDocNumber" placeholder="Número"
+                                        required>
+                                    <label for="recDocNumber">Número de Documento</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="recFullName" placeholder="Nombre completo"
+                                required>
+                            <label for="recFullName">Nombre Completo</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input type="tel" class="form-control" id="recPhone" placeholder="Teléfono" required>
+                            <label for="recPhone">Teléfono</label>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="recFavoriteColor"
+                                        placeholder="Color favorito" required>
+                                    <label for="recFavoriteColor">Color Favorito</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="recFavoriteAnimal"
+                                        placeholder="Animal favorito" required>
+                                    <label for="recFavoriteAnimal">Animal Favorito</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="recoveryError" class="alert alert-danger" style="display:none;"></div>
+
+                        <div id="recoveryResult" class="recovery-result" style="display: none;">
+                            <h6 class="text-success mb-3">
+                                <i class="fas fa-check-circle me-2"></i>Información Validada
+                            </h6>
+                            <div class="row">
+                                <div class="col-6">
+                                    <strong>Usuario:</strong>
+                                    <div id="recoveredUsername" class="text-primary"></div>
+                                </div>
+                                <div class="col-6">
+                                    <strong>Contraseña:</strong>
+                                    <div id="recoveredPassword" class="text-primary"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="btnRecoverPassword">
+                        <i class="fas fa-search me-2"></i>Recuperar Contraseña
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let selectedUserType = 'admin';
+        let sessionToken = null;
+        const googleAppsScriptUrl = 'https://script.google.com/macros/s/AKfycbxCILJhPhwUWLdc1ws6THP2UUkL7z8SwJbl5yPU6Lc6yRXoJcBmqqyofI9MCKjNfBFygg/exec';
+
+        document.addEventListener('DOMContentLoaded', function () {
+            initializeUserTypeSelector();
+            initializeLoginForm();
+            initializeRecoveryForm();
+            setupPasswordToggle();
+            preventBackButton();
+            checkExistingSession();
+        });
+
+        function initializeUserTypeSelector() {
+            const userTypeCards = document.querySelectorAll('.user-type-card');
+
+            userTypeCards.forEach(card => {
+                card.addEventListener('click', function () {
+                    userTypeCards.forEach(c => c.classList.remove('active'));
+                    this.classList.add('active');
+                    selectedUserType = this.dataset.type;
+                    updateFormPlaceholders();
+                });
+            });
+
+            userTypeCards[0].classList.add('active');
+            updateFormPlaceholders();
+        }
+
+        function updateFormPlaceholders() {
+            const usernameInput = document.getElementById('username');
+            const usernameLabel = usernameInput.nextElementSibling;
+
+            if (selectedUserType === 'admin') {
+                usernameInput.placeholder = 'Usuario administrador';
+                usernameLabel.innerHTML = '<i class="fas fa-user-shield me-2"></i>Usuario';
+            } else {
+                usernameInput.placeholder = 'Número de documento';
+                usernameLabel.innerHTML = '<i class="fas fa-id-card me-2"></i>Número de Documento';
+            }
+        }
+
+        function initializeLoginForm() {
+            const loginForm = document.getElementById('loginForm');
+            const btnLogin = document.getElementById('btnLogin');
+
+            if (!btnLogin) {
+                console.error('Error: Botón de login no encontrado. Verifique el ID en su HTML.');
+                return;
+            }
+
+            loginForm.addEventListener('submit', async function (event) {
+                event.preventDefault();
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                const formAlerts = document.getElementById('alertsList');
+
+                btnLogin.disabled = true;
+                btnLogin.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Validando...';
+                formAlerts.innerHTML = '';
+
+                try {
+                    const response = await makeRequest('login', {
+                        username: username,
+                        password: password,
+                        userType: selectedUserType
+                    });
+
+                    if (response.success) {
+                        sessionToken = response.sessionToken;      // <<<<<<  CAMBIO
+                        localStorage.setItem('sessionToken', sessionToken);
+                        localStorage.setItem('userType', response.userType); // mejor usar el que devuelve el backend
+                        localStorage.setItem('username', response.username);
+
+                        showAlert('Inicio de sesión exitoso.', 'success');
+                        setTimeout(() => {
+                            window.location.href = response.redirectUrl; // usa la URL que envía el backend
+                        }, 1000);
+                    } else {
+                        showAlert(response.message, 'danger');
+                    }
+                } catch (error) {
+                    console.error('Login error:', error);
+                    showAlert('Error de conexión con el servidor. Intente de nuevo más tarde.', 'danger');
+                } finally {
+                    btnLogin.disabled = false;
+                    btnLogin.innerHTML = '<i class="fas fa-sign-in-alt me-2"></i>Iniciar Sesión';
+                }
+            });
+        }
+
+        function initializeRecoveryForm() {
+            const btnRecoverPassword = document.getElementById('btnRecoverPassword');
+
+            if (!btnRecoverPassword) {
+                console.error('Error: Botón de recuperación no encontrado. Verifique el ID en su HTML.');
+                return;
+            }
+
+            btnRecoverPassword.addEventListener('click', async function () {
+                const recDocType = document.getElementById('recDocType').value;
+                const recDocNumber = document.getElementById('recDocNumber').value;
+                const recFullName = document.getElementById('recFullName').value;
+                const recPhone = document.getElementById('recPhone').value;
+                const recFavoriteColor = document.getElementById('recFavoriteColor').value;
+                const recFavoriteAnimal = document.getElementById('recFavoriteAnimal').value;
+
+                btnRecoverPassword.disabled = true;
+                btnRecoverPassword.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Validando...';
+
+                try {
+                    const response = await makeRequest('recoverPassword', {
+                        tipoDocumento: recDocType,
+                        numeroDocumento: recDocNumber,
+                        nombreCompleto: recFullName,
+                        telefono: recPhone,
+                        colorFavorito: recFavoriteColor,
+                        animalFavorito: recFavoriteAnimal
+                    });
+
+
+                    const recoveryResultDiv = document.getElementById('recoveryResult');
+                    const recoveredUsernameDiv = document.getElementById('recoveredUsername');
+                    const recoveredPasswordDiv = document.getElementById('recoveredPassword');
+
+                    if (!recoveryResultDiv || !recoveredUsernameDiv || !recoveredPasswordDiv) {
+                        console.error('Error: Elementos de recuperación de contraseña no encontrados.');
+                        showAlert('Error del sistema: No se pueden mostrar los resultados de la recuperación.', 'danger');
+                        return;
+                    }
+
+                    if (response.success) {
+                        recoveredUsernameDiv.textContent = response.data.username;
+                        recoveredPasswordDiv.textContent = response.data.password;
+                        recoveryResultDiv.style.display = 'block';
+                    } else {
+                        showAlert(response.message, 'danger');
+                        recoveryResultDiv.style.display = 'none';
+                    }
+                } catch (error) {
+                    console.error('Recovery error:', error);
+                    showAlert('Error de conexión. Intente de nuevo más tarde.', 'danger');
+                } finally {
+                    btnRecoverPassword.disabled = false;
+                    btnRecoverPassword.innerHTML = '<i class="fas fa-search me-2"></i>Recuperar Contraseña';
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+    function setupPasswordToggle() {
+        const passwordInput = document.getElementById('password');
+        const toggleButton = document.getElementById('togglePassword');
+
+        if (passwordInput && toggleButton) {
+            toggleButton.addEventListener('click', function () {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                this.classList.toggle('fa-eye');
+                this.classList.toggle('fa-eye-slash');
+            });
+        }
+    }
+    setupPasswordToggle(); // Llama a la función aquí para que se ejecute
+});
+
+        async function makeRequest(action, data) {
+            const backendUrl = 'https://script.google.com/macros/s/AKfycbxCILJhPhwUWLdc1ws6THP2UUkL7z8SwJbl5yPU6Lc6yRXoJcBmqqyofI9MCKjNfBFygg/exec'; // tu URL
+
+            try {
+                // 1. Crear un FormData
+                const form = new FormData();
+                // 2. Meter en un solo campo todo el objeto que necesitas enviar
+                form.append('payload', JSON.stringify({ ...data, action }));
+
+                // 3. Hacer fetch SIN cabeceras personalizadas
+                const response = await fetch(backendUrl, {
+                    method: 'POST',
+                    body: form   // NO pongas headers
+                });
+
+                // 4. Leer el JSON de respuesta
+                const result = await response.json();
+                return result;
+
+            } catch (error) {
+                console.error('Error en makeRequest:', error);
+                return { success: false, message: 'Error de conexión' };
+            }
+        }
+
+
+        function showAlert(message, type = 'info') {
+            const alertPlaceholder = document.getElementById('alertsList');
+            if (!alertPlaceholder) return;
+
+            const wrapper = document.createElement('div');
+            const iconClass = getAlertIcon(type);
+
+            wrapper.innerHTML = `
+                <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                    <i class="fas fa-${iconClass} me-2"></i>
+                    ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            `;
+            alertPlaceholder.appendChild(wrapper);
+
+            setTimeout(() => {
+                const alert = bootstrap.Alert.getOrCreateInstance(wrapper.querySelector('.alert'));
+                alert.close();
+            }, 5000);
+        }
+
+        function getAlertIcon(type) {
+            const icons = {
+                success: 'check-circle',
+                danger: 'exclamation-triangle',
+                warning: 'exclamation-circle',
+                info: 'info-circle'
+            };
+            return icons[type] || 'info-circle';
+        }
+
+        function preventBackButton() {
+            window.history.pushState(null, null, window.location.href);
+
+            window.addEventListener('popstate', function () {
+                window.history.pushState(null, null, window.location.href);
+                showAlert('Por favor usa los controles de navegación del sistema', 'warning');
+            });
+        }
+
+        function checkExistingSession() {
+            const token = localStorage.getItem('sessionToken');
+            const userType = localStorage.getItem('userType');
+
+            if (token && userType) {
+                const redirectUrl = userType === 'admin' ? 'admin_dashboard.html' : 'client_dashboard.html';
+                window.location.href = redirectUrl;
+            }
+        }
+
+        // Maneja el cambio de tipo de usuario con los "cards"
+        document.querySelectorAll('.user-type-card').forEach(card => {
+            card.addEventListener('click', function () {
+                // quitar la clase activa a todos y ponerla solo en el seleccionado
+                document.querySelectorAll('.user-type-card').forEach(c => c.classList.remove('active'));
+                this.classList.add('active');
+
+                // aquí sabemos si es admin o client
+                const selectedType = this.dataset.type;
+                // Muestra u oculta el enlace de recuperación
+                document.getElementById('forgotPasswordContainer').style.display =
+                    selectedType === 'client' ? 'block' : 'none';
+            });
+        });
+
+
+
+    </script>
+</body>
+
+</html>
