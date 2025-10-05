@@ -4,8 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Créditos Rápidos - Soluciones Financieras</title>
+    <title>Créditos Rápidos PRO - Soluciones Financieras Inteligentes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
+        /* ================================================================= */
+        /* 1. RESET Y VARIABLES */
+        /* ================================================================= */
         * {
             margin: 0;
             padding: 0;
@@ -13,341 +17,205 @@
         }
 
         :root {
-            --primary: #2563eb;
-            --secondary: #7c3aed;
+            --primary: #4f46e5;
+            /* Azul Violeta - Profundo */
+            --secondary: #6366f1;
+            /* Azul Profundo - Ligeramente más claro */
             --accent: #06b6d4;
+            /* Turquesa */
             --success: #10b981;
-            --warning: #f59e0b;
+            /* Verde para Éxito */
+            --warning: #fbbf24;
+            /* Ámbar para Alerta */
             --danger: #ef4444;
-            --dark: #1e293b;
-            --light: #f8fafc;
+            /* Rojo para Error */
+            --dark: #1f2937;
+            /* Gris Oscuro Corporativo */
+            --light: #f9fafb;
+            /* Blanco Hueso (Fondo de sección) */
+            --white: #ffffff;
+            /* Blanco Puro */
+            --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.05);
+            --shadow-medium: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.7;
             color: var(--dark);
+            background-color: var(--white);
             overflow-x: hidden;
+            scroll-behavior: smooth;
         }
 
-        /*
- * NOTA: Debes reemplazar 'ruta/a/tu/imagen-oficina.jpg' con la URL o
- * la ruta real de tu archivo de imagen profesional de oficina.
- */
-        .hero-section {
-            /* Altura Mínima: asegura que la sección sea alta para que la imagen se vea bien */
-            min-height: 500px;
-
-            /* Centra el contenido (título, texto, botones) */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-
-            /* Color de texto en blanco para que contraste con el fondo oscuro */
-            color: white;
-
-            /* ---------------------------------------------------------------- */
-            /* CONFIGURACIÓN DEL FONDO (IMAGEN Y SUPERPOSICIÓN) */
-            /* ---------------------------------------------------------------- */
-
-            /* Degradado de color (Superposición azul/morado) para hacer el texto legible */
-            background-image:
-                linear-gradient(rgba(45, 12, 115, 0.5), rgba(0, 123, 255, 0.4)),
-                url('https://cdn.prod.website-files.com/5da0a1a1718dbe0c6b38d860/63d1c0babcec7178e7d3a236_WhatsApp%20Image%202023-01-25%20at%205.26.40%20PM%20(1).jpeg');
-
-            /* Propiedades de la imagen de fondo */
-            background-size: cover;
-            /* Asegura que la imagen cubra todo el espacio */
-            background-position: center;
-            /* Centra la imagen */
-            background-repeat: no-repeat;
-            /* Evita que la imagen se repita */
-
-            /* Relleno interno */
-            padding: 5rem 1rem;
+        /* Utilidad de contenedor */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
 
-        /* Opcional: Estilos para el texto y botones dentro de la sección hero */
-        .hero-content {
-            max-width: 800px;
-            z-index: 10;
-            /* Asegura que el contenido esté por encima del fondo */
+        /* Estilo de la sección y animaciones de entrada */
+        section {
+            padding: 5rem 0;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         }
 
-        .hero-content h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        /* ... y aquí añadirías el resto de estilos de tus botones (.btn-primary, .btn-secondary) ... */
+        /* ================================================================= */
+        /* 2. HEADER Y NAVEGACIÓN */
+        /* ================================================================= */
 
-        /* Header */
         header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
+            background-color: rgba(255, 255, 255, 0.95);
+            color: var(--dark);
             padding: 1rem 0;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            animation: slideDown 0.5s ease;
-        }
-
-        @keyframes slideDown {
-            from {
-                transform: translateY(-100%);
-            }
-
-            to {
-                transform: translateY(0);
-            }
+            box-shadow: var(--shadow-light);
         }
 
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
         }
 
         .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: -0.5px;
         }
 
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 2.5rem;
             list-style: none;
         }
 
         .nav-links a {
-            color: white;
+            color: var(--dark);
             text-decoration: none;
-            transition: all 0.3s;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
+            font-weight: 600;
+            position: relative;
+            transition: color 0.3s;
+            padding: 0.2rem 0;
         }
 
         .nav-links a:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
+            color: var(--secondary);
         }
 
         .login-btn {
-            background: white;
-            color: var(--primary);
-            padding: 0.5rem 1.5rem;
-            border-radius: 25px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            padding: 0.7rem 2rem;
+            border-radius: 50px;
             text-decoration: none;
-            font-weight: bold;
+            font-weight: 600;
             transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
         .login-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3);
         }
 
-        .mobile-menu {
-            display: none;
-            cursor: pointer;
-            font-size: 1.5rem;
-        }
+        /* ================================================================= */
+        /* 3. HERO SECTION */
+        /* ================================================================= */
 
-        /* Hero Section */
-        .hero {
-            margin-top: 70px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 6rem 2rem;
-            text-align: center;
+        .hero-section {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+            background: linear-gradient(135deg, #eef2ff 0%, #f9fafb 100%);
             position: relative;
             overflow: hidden;
         }
 
-        .hero::before {
+        .hero-section::before {
             content: '';
             position: absolute;
             top: 0;
-            left: 0;
             right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="https://cdn.prod.website-files.com/5da0a1a1718dbe0c6b38d860/63d1c0babcec7178e7d3a236_WhatsApp%20Image%202023-01-25%20at%205.26.40%20PM%20(1).jpeg" viewBox="0 0 1200 120"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" fill="%23ffffff"></path><path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" fill="%23ffffff"></path><path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="%23ffffff"></path></svg>') no-repeat bottom;
+            width: 40%;
+            height: 100%;
+            /* IMAGEN PROFESIONAL DE OFICINA */
+            background-image: url('https://cdn.prod.website-files.com/5da0a1a1718dbe0c6b38d860/63d1c0babcec7178e7d3a236_WhatsApp%20Image%202023-01-25%20at%205.26.40%20PM%20(1).jpeg');
             background-size: cover;
-            opacity: 0.1;
+            background-position: center;
+            opacity: 0.3;
         }
 
         .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
+            max-width: 600px;
+            z-index: 10;
         }
 
-        .hero h1 {
-            font-size: 3rem;
+        .hero-content h1 {
+            font-size: 3.5rem;
             margin-bottom: 1rem;
-            animation: fadeInUp 1s ease;
+            font-weight: 700;
+            color: var(--dark);
+            animation: fadeInRight 1s ease-out;
         }
 
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            animation: fadeInUp 1s ease 0.2s backwards;
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            color: #4b5563;
+            animation: fadeInRight 1s ease-out 0.3s backwards;
         }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 0.8rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            animation: fadeInUp 1s ease 0.4s backwards;
+        .cta-buttons a {
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            margin-right: 1rem;
         }
 
         .btn {
-            padding: 1rem 2rem;
             border: none;
-            border-radius: 30px;
-            font-size: 1rem;
+            border-radius: 50px;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
             text-decoration: none;
             display: inline-block;
-            font-weight: bold;
         }
 
         .btn-primary {
-            background: white;
-            color: var(--primary);
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: var(--white);
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4);
         }
 
         .btn-outline {
-            background: transparent;
-            color: white;
-            border: 2px solid white;
+            background: var(--white);
+            color: var(--primary);
+            border: 2px solid var(--primary);
         }
 
         .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+            opacity: 0.9;
         }
 
-        /* Secciones */
-        section {
-            padding: 4rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            color: var(--dark);
-            position: relative;
-            display: inline-block;
-            width: 100%;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 4px;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            border-radius: 2px;
-        }
-
-        /* Tipos de Préstamos */
-        .prestamos-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .prestamo-card {
-            background: white;
-            border-radius: 15px;
-            padding: 2rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .prestamo-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-        }
-
-        .prestamo-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        .prestamo-card h3 {
-            color: var(--primary);
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
-        }
-
-        .prestamo-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            display: block;
-        }
-
-        /* Testimonios */
-        .testimonios-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .testimonio {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            animation: slideIn 0.5s ease;
-            position: relative;
-        }
-
-        @keyframes slideIn {
+        @keyframes fadeInRight {
             from {
                 opacity: 0;
-                transform: translateX(-20px);
+                transform: translateX(-30px);
             }
 
             to {
@@ -356,214 +224,265 @@
             }
         }
 
-        .testimonio::before {
-            content: '"';
-            font-size: 4rem;
-            color: var(--primary);
-            opacity: 0.2;
-            position: absolute;
-            top: 0;
-            left: 1rem;
+
+        /* ================================================================= */
+        /* 4. TÍTULOS Y TARJETAS */
+        /* ================================================================= */
+
+        .section-title {
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            margin: 10px auto 0;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            color: #6b7280;
+            margin-bottom: 4rem;
+        }
+
+        .prestamos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .prestamo-card {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow-medium);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            cursor: pointer;
+            border-left: 5px solid var(--primary);
+        }
+
+        .prestamo-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Estilo para los testimonios - Mantiene el diseño original pero con la nueva fuente */
+        .testimonios-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .testimonio {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow-light);
+            border: 1px solid #e5e7eb;
         }
 
         .testimonio-avatar {
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
+            background: var(--primary);
+            color: var(--white);
+            font-weight: 700;
+            margin: 0 auto 1rem;
         }
 
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 2000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            animation: fadeIn 0.3s ease;
+
+        /* ================================================================= */
+        /* 5. CALCULADORA */
+        /* ================================================================= */
+
+        #calculadora {
+            background: var(--light);
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
-        .modal-content {
-            background: white;
-            margin: 5% auto;
-            padding: 2rem;
-            border-radius: 15px;
-            max-width: 800px;
-            max-height: 80vh;
-            overflow-y: auto;
-            position: relative;
-            animation: slideUp 0.3s ease;
-        }
-
-        @keyframes slideUp {
-            from {
-                transform: translateY(50px);
-                opacity: 0;
-            }
-
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .close {
-            position: absolute;
-            right: 1.5rem;
-            top: 1rem;
-            font-size: 2rem;
-            cursor: pointer;
-            color: #999;
-            transition: color 0.3s;
-        }
-
-        .close:hover {
-            color: var(--danger);
-        }
-
-        /* Calculadora */
         .calculator-container {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--white);
             border-radius: 20px;
-            padding: 2rem;
-            color: white;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 3rem;
+            box-shadow: var(--shadow-medium);
         }
 
         .calculator-tabs {
             display: flex;
             gap: 1rem;
             margin-bottom: 2rem;
-            flex-wrap: wrap;
+            border-bottom: 2px solid #e5e7eb;
         }
 
         .tab-btn {
             flex: 1;
-            min-width: 150px;
             padding: 1rem;
-            background: rgba(255, 255, 255, 0.2);
+            background: transparent;
             border: none;
-            color: white;
-            border-radius: 10px;
+            color: var(--dark);
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
-            font-weight: bold;
+            position: relative;
+            font-size: 1.1rem;
         }
 
         .tab-btn.active {
-            background: white;
             color: var(--primary);
+        }
+
+        .tab-btn::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--primary);
+            transition: width 0.3s ease-out;
+        }
+
+        .tab-btn.active::after {
+            width: 100%;
         }
 
         .calculator-form {
             display: none;
+            padding-top: 1.5rem;
         }
 
         .calculator-form.active {
             display: block;
-            animation: fadeInUp 0.5s ease;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 0.5rem;
-            font-weight: bold;
-        }
-
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 0.8rem;
-            border: none;
-            border-radius: 10px;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+            color: var(--dark);
             font-size: 1rem;
         }
 
+        /* Estilo para los Sliders (Input Range) */
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 10px;
+            background: #e5e7eb;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            transition: background 0.3s;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+            box-shadow: 0 0 5px rgba(79, 70, 229, 0.5);
+        }
+
+        .slider-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
         .result-box {
-            background: white;
+            background: #f3f4f6;
+            border: 1px solid #e5e7eb;
             color: var(--dark);
             padding: 2rem;
             border-radius: 15px;
             margin-top: 2rem;
             display: none;
+            animation: fadeIn 0.5s ease;
         }
 
         .result-box.show {
             display: block;
-            animation: fadeInUp 0.5s ease;
         }
 
         .result-item {
             display: flex;
             justify-content: space-between;
-            padding: 1rem 0;
-            border-bottom: 1px solid #e5e7eb;
+            padding: 0.8rem 0;
+            border-bottom: 1px dashed #d1d5db;
         }
 
-        .result-item:last-child {
-            border-bottom: none;
+        /* Gráfica de Amortización (Simulación con CSS) */
+        .chart-container {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: var(--white);
+            border-radius: 10px;
+            border: 1px solid #e5e7eb;
         }
 
-        .cuota-table {
+        .chart-bar-container {
+            display: flex;
+            align-items: flex-end;
+            height: 150px;
+            gap: 5px;
+            border-left: 2px solid var(--dark);
+            border-bottom: 2px solid var(--dark);
+            padding-bottom: 5px;
+            padding-left: 5px;
+        }
+
+        .chart-bar {
+            flex-grow: 1;
+            position: relative;
+            background: var(--secondary);
+            transition: height 0.5s ease-out;
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
+        }
+
+        .chart-capital {
+            background: var(--success);
+            opacity: 0.8;
+            transition: height 0.5s ease-out;
+            position: absolute;
+            bottom: 0;
             width: 100%;
-            margin-top: 1rem;
-            border-collapse: collapse;
-            color: var(--dark);
         }
 
-        .cuota-table th,
-        .cuota-table td {
-            padding: 0.8rem;
-            text-align: left;
-            border-bottom: 1px solid #e5e7eb;
-        }
 
-        .cuota-table th {
-            background: var(--primary);
-            color: white;
-        }
+        /* ================================================================= */
+        /* 6. ANALIZADOR DE CRÉDITO (Progresivo y Gráfico) */
+        /* ================================================================= */
 
-        /* Analizador de Crédito */
         .credit-analyzer {
-            background: white;
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--white);
             border-radius: 20px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .question-container {
-            margin-bottom: 2rem;
+            padding: 3rem;
+            box-shadow: var(--shadow-medium);
         }
 
         .progress-bar {
-            width: 100%;
-            height: 10px;
+            height: 12px;
             background: #e5e7eb;
-            border-radius: 10px;
+            border-radius: 6px;
             margin-bottom: 2rem;
             overflow: hidden;
         }
@@ -572,620 +491,665 @@
             height: 100%;
             background: linear-gradient(to right, var(--primary), var(--success));
             transition: width 0.3s ease;
-            border-radius: 10px;
+            border-radius: 6px;
+        }
+        
+        /* Contenedor de preguntas */
+        .question-container {
+            min-height: 250px; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Estilo para los botones de respuesta del analizador */
+        .question-container .btn-outline {
+             padding: 0.8rem 2rem;
+             margin-right: 1rem;
+        }
+
+        /* Estilos de la animación de carga original */
+        .loading-animation {
+            text-align: center;
+            padding: 3rem 0;
+            display: none; /* Inicialmente oculto */
+        }
+        .loading-animation.show {
+            display: block;
+        }
+        .spinner {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--primary);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1.5rem;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .data-bars {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin-top: 2rem;
+            height: 30px;
+        }
+        .data-bar {
+            width: 8px;
+            height: 100%;
+            border-radius: 4px;
+            transform: scaleY(0.4);
+            animation: bar-stretch 1.5s ease-in-out infinite alternate;
+        }
+        .data-bar:nth-child(2) { animation-delay: 0.2s; }
+        .data-bar:nth-child(3) { animation-delay: 0.4s; }
+        .data-bar:nth-child(4) { animation-delay: 0.6s; }
+        .data-bar:nth-child(5) { animation-delay: 0.8s; }
+
+        @keyframes bar-stretch {
+            0% { transform: scaleY(0.4); }
+            100% { transform: scaleY(1); }
         }
 
         .analysis-result {
             text-align: center;
             padding: 2rem;
             display: none;
+            animation: fadeIn 0.5s ease;
         }
 
         .analysis-result.show {
             display: block;
-            animation: fadeInUp 0.5s ease;
         }
 
-        .score-circle {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            margin: 2rem auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            font-weight: bold;
-            color: white;
+        /* Medidor de Puntuación (Simulado con CSS y SVG/Círculo) */
+        .score-gauge-container {
+            width: 250px;
+            height: 125px;
+            margin: 2rem auto 3rem;
             position: relative;
-            animation: pulse 2s infinite;
+            overflow: hidden;
         }
 
-        @keyframes pulse {
-
-            0%,
-            100% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.05);
-            }
-        }
-
-        .loading-animation {
-            text-align: center;
-            padding: 3rem;
-            display: none;
-        }
-
-        .loading-animation.show {
-            display: block;
-        }
-
-        .spinner {
-            width: 80px;
-            height: 80px;
-            border: 8px solid #f3f3f3;
-            border-top: 8px solid var(--primary);
+        .score-gauge {
+            width: 250px;
+            height: 250px;
             border-radius: 50%;
-            margin: 2rem auto;
-            animation: spin 1s linear infinite;
+            border: 15px solid #e5e7eb;
+            border-bottom-color: transparent;
+            border-left-color: transparent;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            transform: rotate(-45deg);
         }
 
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
+        .score-gauge-fill {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            border: 15px solid transparent;
+            border-top-color: var(--success);
+            border-right-color: var(--success);
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            transform: rotate(-45deg);
+            transition: transform 1.5s ease-out;
         }
 
-        .data-bars {
-            display: flex;
-            gap: 0.5rem;
-            justify-content: center;
-            margin-top: 1rem;
+        .score-label {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--dark);
         }
 
-        .data-bar {
-            width: 10px;
-            height: 40px;
-            background: var(--primary);
-            border-radius: 5px;
-            animation: dataFlow 1s ease-in-out infinite;
-        }
 
-        .data-bar:nth-child(2) {
-            animation-delay: 0.1s;
-        }
+        /* ================================================================= */
+        /* 7. FORMULARIOS */
+        /* ================================================================= */
 
-        .data-bar:nth-child(3) {
-            animation-delay: 0.2s;
-        }
-
-        .data-bar:nth-child(4) {
-            animation-delay: 0.3s;
-        }
-
-        .data-bar:nth-child(5) {
-            animation-delay: 0.4s;
-        }
-
-        @keyframes dataFlow {
-
-            0%,
-            100% {
-                height: 20px;
-                opacity: 0.5;
-            }
-
-            50% {
-                height: 60px;
-                opacity: 1;
-            }
-        }
-
-        /* Formulario de Contacto */
-        .contact-form {
-            background: white;
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-top: 1rem;
-        }
-
-        .checkbox-group input[type="checkbox"] {
-            width: auto;
-        }
-
-        /* Estilo por defecto para TODOS los campos de texto/input */
         input[type="text"],
         input[type="email"],
         input[type="tel"],
+        input[type="date"],
         textarea {
-            /* 1. Borde negro por defecto (2px sólido negro) */
-            border: 2px solid black;
-
-            /* 2. Quitar el borde predeterminado del navegador para que se vea solo el negro */
-            outline: none;
-
-            /* (Opcional) Bordes redondeados para que se parezca a tu imagen */
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #d1d5db;
             border-radius: 8px;
-
-            /* (Opcional) Transición para un cambio de color más suave */
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            outline: none;
+            transition: all 0.3s;
+            font-size: 1rem;
+            margin-bottom: 1rem;
         }
 
-        /* ----------------------------------------------------- */
-
-        /* Estilo cuando el campo de texto tiene el foco (el usuario está escribiendo) */
         input[type="text"]:focus,
         input[type="email"]:focus,
         input[type="tel"]:focus,
+        input[type="date"]:focus,
         textarea:focus {
-            /* 3. Borde azul al enfocar */
-            border-color: #007bff;
-            /* Azul */
-
-            /* (Opcional) Una ligera sombra azul para un efecto más moderno (como en tu imagen) */
-            box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.25);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
         }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            animation: slideDown 0.3s;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            line-height: 1;
+            padding-left: 10px;
+        }
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideDown { from { transform: translateY(-50px); } to { transform: translateY(0); } }
 
-        /* Footer */
+
+        /* ================================================================= */
+        /* 8. FOOTER Y RESPONSIVE */
+        /* ================================================================= */
         footer {
             background: var(--dark);
-            color: white;
-            padding: 3rem 2rem;
-            margin-top: 4rem;
+            color: #d1d5db;
+            padding: 4rem 0 2rem;
         }
 
         .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 2rem;
+            border-bottom: 1px solid #374151;
+            padding-bottom: 2rem;
         }
-
+        
         .footer-section h3 {
+            color: var(--white);
             margin-bottom: 1rem;
-            color: var(--accent);
         }
 
-        .footer-section ul {
-            list-style: none;
-        }
-
-        .footer-section ul li {
-            margin-bottom: 0.5rem;
-        }
-
-        .footer-section a {
-            color: #cbd5e1;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer-section a:hover {
-            color: white;
-        }
-
-        .social-icons {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .social-icons a {
-            width: 40px;
-            height: 40px;
-            background: var(--primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-        }
-
-        .social-icons a:hover {
-            transform: translateY(-3px);
-            background: var(--secondary);
-        }
-
-        /* Responsive */
         @media (max-width: 768px) {
-            .nav-links {
+            .hero-section {
+                text-align: center;
+                min-height: 60vh;
+            }
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            .nav-links,
+            .login-btn {
                 display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: linear-gradient(135deg, var(--primary), var(--secondary));
-                flex-direction: column;
-                padding: 1rem;
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             }
-
-            .nav-links.active {
-                display: flex;
-            }
-
             .mobile-menu {
-                display: block;
+                display: block !important;
+                font-size: 1.8rem;
+                cursor: pointer;
+                color: var(--primary);
             }
-
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .hero p {
-                font-size: 1rem;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .modal-content {
-                margin: 10% 1rem;
-                padding: 1.5rem;
-            }
-
-            .calculator-tabs {
+            .cta-buttons {
                 flex-direction: column;
+                gap: 1rem;
             }
-
-            .tab-btn {
-                min-width: auto;
+            .cta-buttons a {
+                margin-right: 0;
             }
         }
 
-        /* Políticas */
-        .policy-section {
-            background: #f8fafc;
+                /* 4.5. NUEVA SECCIÓN: QUIÉNES SOMOS Y ESTADÍSTICAS (Stats) */
+
+                .acerca-de-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            margin-bottom: 4rem;
+            text-align: left;
+        }
+
+        .acerca-de-content h3 {
+            color: var(--dark);
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .mision-vision-valores div {
+            margin-bottom: 2rem;
+        }
+        
+        .mision-vision-valores h4 {
+            color: var(--secondary);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .stat-card {
+            background: var(--white);
             padding: 2rem;
             border-radius: 15px;
-            margin-bottom: 2rem;
-            border-left: 5px solid var(--primary);
+            box-shadow: var(--shadow-medium);
+            text-align: center;
+            /* Usamos accent para darle un toque fresco */
+            border-bottom: 5px solid var(--accent); 
+            transition: transform 0.3s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
         }
 
-        .policy-section h3 {
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-
-        .policy-section ul {
-            list-style-position: inside;
-            margin-left: 1rem;
-        }
-
-        .policy-section li {
+        .stat-card .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--secondary);
+            display: block;
             margin-bottom: 0.5rem;
+            line-height: 1.1;
+        }
+        
+        .stat-card .stat-label {
+            font-size: 1rem;
+            color: var(--dark);
+            font-weight: 600;
         }
     </style>
 </head>
 
 <body>
     <header>
-        <nav>
-            <div class="logo">
-                💰 Créditos Rápidos
-            </div>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#prestamos">Préstamos</a></li>
-                <li><a href="#calculadora">Calculadora</a></li>
-                <li><a href="#analisis">Análisis</a></li>
-                <li><a href="#contacto">Contacto</a></li>
-            </ul>
-            <a href="login.html" class="login-btn">Ingresar</a>
-            <div class="mobile-menu" onclick="toggleMenu()">☰</div>
-        </nav>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <span style="color: var(--secondary);">CRÉDITO</span> PRO
+                </div>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#acerca-de">Nosotros</a></li>
+                    <li><a href="#prestamos">Préstamos</a></li>
+                    <li><a href="#calculadora">Simulador</a></li>
+                    <li><a href="#analisis">Score</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+                <a href="login.html" class="login-btn">Acceso Cliente</a>
+                <div class="mobile-menu" onclick="toggleMenu()" style="display: none;">☰</div>
+            </nav>
+        </div>
     </header>
 
     <section class="hero-section" id="inicio">
-        <div class="hero-content">
-            <h1>Soluciones Financieras a Tu Medida</h1>
-            <p>Préstamos rápidos, seguros y confiables. Tu tranquilidad financiera es nuestra prioridad.</p>
-            <div class="cta-buttons">
-                <a href="#calculadora" class="btn btn-primary">Calcular Préstamo</a>
-                <a href="#analisis" class="btn btn-outline">Análisis de Crédito</a>
+        <div class="container">
+            <div class="hero-content">
+                <h1>Financiamiento Inteligente para tus Metas</h1>
+                <p>La plataforma que transforma la forma en que solicitas créditos. Transparencia, velocidad y las
+                    mejores tasas adaptadas a tu perfil.</p>
+                <div class="cta-buttons">
+                    <a href="#calculadora" class="btn btn-primary">Simular Mi Crédito</a>
+                    <a href="#analisis" class="btn btn-outline">Consultar Mi Score</a>
+                </div>
             </div>
         </div>
     </section>
 
+    <section id="acerca-de" style="background: var(--light);">
+        <div class="container">
+            <h2 class="section-title">Quiénes Somos y Nuestro Compromiso</h2>
+            <p class="section-subtitle">Conoce los pilares que nos hacen líderes en soluciones financieras inteligentes.</p>
+
+            <div class="acerca-de-content">
+                <div class="mision-vision-valores">
+                    <h3>Crédito PRO: Liderando el futuro financiero</h3>
+                    <p style="margin-bottom: 1.5rem; color: #4b5563;">Somos una fintech dedicada a democratizar el acceso al crédito. Usamos tecnología avanzada para evaluar perfiles rápidamente y ofrecer productos transparentes y justos, centrados siempre en el bienestar de nuestros clientes.</p>
+
+                    <div id="mision">
+                        <h4>Misión</h4>
+                        <p>Ofrecer soluciones de financiamiento rápidas, seguras y flexibles, impulsando el progreso económico y personal de cada uno de nuestros clientes.</p>
+                    </div>
+
+                    <div id="vision">
+                        <h4>Visión</h4>
+                        <p>Ser la plataforma de créditos online más confiable e innovadora de Latinoamérica, reconocida por su excelencia en servicio y su impacto positivo en la vida de las personas.</p>
+                    </div>
+
+                    <div id="valores">
+                        <h4>Valores e Intereses</h4>
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li style="margin-bottom: 0.5rem;">⭐ Transparencia Total</li>
+                            <li style="margin-bottom: 0.5rem;">🤝 Compromiso con el Cliente</li>
+                            <li style="margin-bottom: 0.5rem;">💡 Innovación Continua</li>
+                            <li>🌱 Crecimiento Sostenible</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div style="text-align: center;">
+                    <img src="https://www.shutterstock.com/image-photo/happy-latin-business-leader-woman-600nw-2608441783.jpg" alt="Equipo de oficina de Crédito PRO" style="max-width: 100%; height: auto; border-radius: 15px; box-shadow: var(--shadow-medium);">
+                </div>
+            </div>
+            
+            <h3 class="section-title" style="margin-top: 5rem;">Nuestras Estadísticas Clave (KPIs)</h3>
+            <p class="section-subtitle" style="margin-bottom: 3rem;">La eficiencia y la satisfacción son la base de nuestro modelo de negocio.</p>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-number">15.420+</span>
+                    <span class="stat-label">Clientes Satisfechos</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">12 Min</span>
+                    <span class="stat-label">Tiempo de Respuesta Promedio</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">98.5%</span>
+                    <span class="stat-label">Tasa de Efectividad en Aprobación</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">4 Horas</span>
+                    <span class="stat-label">Tiempo en Ejecución de Préstamos</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
 
     <section id="prestamos">
-        <h2 class="section-title">Nuestros Tipos de Préstamos</h2>
-        <div class="prestamos-grid">
-            <div class="prestamo-card" onclick="openModal('modalFijo')">
-                <span class="prestamo-icon">📊</span>
-                <h3>Interés Fijo</h3>
-                <p>Cuotas fijas con interés del 40% sobre el monto total. Ideal para quienes buscan estabilidad en sus
-                    pagos.</p>
-                <p><strong>Tasa:</strong> 40% sobre el total</p>
-                <p><strong>Ventaja:</strong> Cuotas predecibles</p>
-            </div>
+        <div class="container">
+            <h2 class="section-title">Nuestras Soluciones de Financiamiento</h2>
+            <p class="section-subtitle">Opciones claras y transparentes para que elijas la que mejor se ajusta a ti.</p>
+            <div class="prestamos-grid">
+                <div class="prestamo-card" onclick="openModal('modalFijo')">
+                    <span class="prestamo-icon">✅</span>
+                    <h3>Interés Fijo Controlado</h3>
+                    <p>Cuotas que no cambian, garantizando estabilidad. Ideal para una gestión presupuestaria precisa.
+                    </p>
+                    <p style="margin-top: 0.5rem; color: var(--primary); font-weight: 600;">Tasa Base: 40% (Total)</p>
+                </div>
 
-            <div class="prestamo-card" onclick="openModal('modalVariable')">
-                <span class="prestamo-icon">📈</span>
-                <h3>Interés Variable</h3>
-                <p>Interés calculado sobre el saldo pendiente. Paga menos intereses a medida que abonas al capital.</p>
-                <p><strong>Tasa inicial:</strong> 10-15%</p>
-                <p><strong>Ventaja:</strong> Ahorro en intereses</p>
-            </div>
+                <div class="prestamo-card" onclick="openModal('modalVariable')">
+                    <span class="prestamo-icon">⚡</span>
+                    <h3>Interés Variable Deudores</h3>
+                    <p>El interés se calcula sobre el saldo, permitiéndote ahorrar si realizas pagos anticipados.</p>
+                    <p style="margin-top: 0.5rem; color: var(--primary); font-weight: 600;">Tasa Mensual: Desde 1.5%
+                    </p>
+                </div>
 
-            <div class="prestamo-card" onclick="openModal('modalEmpeno')">
-                <span class="prestamo-icon">💎</span>
-                <h3>Bajo Empeño</h3>
-                <p>Préstamo garantizado con un artículo de valor. Tasas más bajas y sin cargos por mora.</p>
-                <p><strong>Tasa:</strong> 5% sobre el total</p>
-                <p><strong>Ventaja:</strong> Menor costo financiero</p>
+                <div class="prestamo-card" onclick="openModal('modalEmpeno')">
+                    <span class="prestamo-icon">🔒</span>
+                    <h3>Garantía y Empeño PRO</h3>
+                    <p>Accede a la tasa más baja del mercado dejando un bien de valor. Mínimo riesgo y máximo beneficio.
+                    </p>
+                    <p style="margin-top: 0.5rem; color: var(--primary); font-weight: 600;">Tasa Total: Solo 5%</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <section style="background: #f8fafc;">
-        <h2 class="section-title">Lo Que Dicen Nuestros Clientes</h2>
-        <div class="testimonios-container">
-            <div class="testimonio">
-                <div class="testimonio-avatar">MR</div>
-                <p>"Excelente servicio, rápido y confiable. Obtuve mi préstamo en menos de 24 horas. Totalmente
-                    recomendado."</p>
-                <p style="margin-top: 1rem; font-weight: bold;">- María Rodríguez</p>
-            </div>
-            <div class="testimonio" style="animation-delay: 0.2s;">
-                <div class="testimonio-avatar">JG</div>
-                <p>"Las tasas son justas y el proceso es muy transparente. Me ayudaron a salir de un apuro financiero."
-                </p>
-                <p style="margin-top: 1rem; font-weight: bold;">- Juan García</p>
-            </div>
-            <div class="testimonio" style="animation-delay: 0.4s;">
-                <div class="testimonio-avatar">JA</div>
-                <p>"Su asesoría fue **clave para conseguir mi hipoteca**. Un proceso muy rápido y sin complicaciones,
-                    ¡los recomiendo!"</p>
-                <p style="margin-top: 1rem; font-weight: bold;">- Javier Aranda</p>
-            </div>
-
-            <div class="testimonio" style="animation-delay: 0.6s;">
-                <div class="testimonio-avatar">ML</div>
-                <p>"**Excelentes profesionales**. Me ayudaron a entender mis opciones de inversión y el trato fue
-                    siempre muy cercano y honesto."</p>
-                <p style="margin-top: 1rem; font-weight: bold;">- Marta López</p>
-            </div>
-
-            <div class="testimonio" style="animation-delay: 0.8s;">
-                <div class="testimonio-avatar">EC</div>
-                <p>"Necesitaba un crédito urgente y me respondieron inmediatamente. La **mejor atención al cliente** que
-                    he recibido."</p>
-                <p style="margin-top: 1rem; font-weight: bold;">- Ernesto Castro</p>
-            </div>
-
-            <div class="testimonio" style="animation-delay: 1.0s;">
-                <div class="testimonio-avatar">RG</div>
-                <p>"Estoy muy satisfecha con el servicio. Me ofrecieron un plan de refinanciamiento que **redujo mis
-                    pagos mensuales** de forma significativa."</p>
-                <p style="margin-top: 1rem; font-weight: bold;">- Rosa Gutiérrez</p>
+    <section style="background: var(--light);">
+        <div class="container">
+            <h2 class="section-title">Nuestra Confianza en Cifras</h2>
+            <p class="section-subtitle">Más de 10 años en el mercado. Escucha a quienes ya impulsaron sus proyectos.</p>
+            <div class="testimonios-container">
+                <div class="testimonio">
+                    <div class="testimonio-avatar">MR</div>
+                    <p>"Excelente servicio, rápido y confiable. Obtuve mi préstamo en menos de 24 horas. Totalmente
+                        recomendado."</p>
+                    <p style="margin-top: 1rem; font-weight: bold;">- María Rodríguez</p>
+                </div>
+                <div class="testimonio">
+                    <div class="testimonio-avatar">JG</div>
+                    <p>"Las tasas son justas y el proceso es muy transparente. Me ayudaron a salir de un apuro financiero."
+                    </p>
+                    <p style="margin-top: 1rem; font-weight: bold;">- Juan García</p>
+                </div>
+                <div class="testimonio">
+                    <div class="testimonio-avatar">JA</div>
+                    <p>"Su asesoría fue clave para conseguir mi hipoteca. Un proceso muy rápido y sin
+                        complicaciones, ¡los recomiendo!"</p>
+                    <p style="margin-top: 1rem; font-weight: bold;">- Javier Aranda</p>
+                </div>
+                <div class="testimonio">
+                    <div class="testimonio-avatar">ML</div>
+                    <p>"Excelentes profesionales. Me ayudaron a entender mis opciones de inversión y el trato fue
+                        siempre muy cercano y honesto."</p>
+                    <p style="margin-top: 1rem; font-weight: bold;">- Marta López</p>
+                </div>
             </div>
         </div>
     </section>
-
     <section id="calculadora">
-        <h2 class="section-title">Calculadora de Préstamos</h2>
-        <div class="calculator-container">
-            <div class="calculator-tabs">
-                <button class="tab-btn active" onclick="switchTab(event, 'fijo')">Interés Fijo</button>
-                <button class="tab-btn" onclick="switchTab(event, 'variable')">Interés Variable</button>
-                <button class="tab-btn" onclick="switchTab(event, 'empeno')">Bajo Empeño</button>
-            </div>
+        <div class="container">
+            <h2 class="section-title">Simulador Financiero Profesional</h2>
+            <p class="section-subtitle">Ajusta los parámetros y visualiza en tiempo real tus cuotas y el ahorro total.
+            </p>
+            <div class="calculator-container">
+                <div class="calculator-tabs">
+                    <button class="tab-btn active" onclick="switchTab(event, 'fijo')">Interés Fijo</button>
+                    <button class="tab-btn" onclick="switchTab(event, 'variable')">Interés Variable</button>
+                    <button class="tab-btn" onclick="switchTab(event, 'empeno')">Bajo Empeño</button>
+                </div>
 
-            <div id="calc-fijo" class="calculator-form active">
-                <div class="form-group">
-                    <label>Monto del Préstamo ($)</label>
-                    <input type="number" id="monto-fijo" placeholder="Ej: 500000" min="50000">
+                <div id="calc-fijo" class="calculator-form active">
+                    <div class="form-group">
+                        <label>Monto del Préstamo ($): <span id="monto-fijo-display" class="slider-value"></span></label>
+                        <input type="range" id="monto-fijo" min="50000" max="10000000" step="10000" value="50000"
+                            oninput="updateSliderDisplay('monto-fijo')">
+                    </div>
+                    <div class="form-group">
+                        <label>Plazo (meses): <span id="plazo-fijo-display" class="slider-value"></span></label>
+                        <input type="range" id="plazo-fijo" min="2" max="18" step="1" value="2"
+                            oninput="updateSliderDisplay('plazo-fijo')">
+                    </div>
+                    <button class="btn btn-primary" onclick="calcularFijo()" style="width: 100%; margin-top: 1rem;">
+                        Calcular Cuota Fija
+                    </button>
+                    <div id="result-fijo" class="result-box"></div>
                 </div>
-                <div class="form-group">
-                    <label>Plazo (meses)</label>
-                    <input type="number" id="plazo-fijo" placeholder="Ej: 5" min="1" max="36">
-                </div>
-                <button class="btn btn-primary" onclick="calcularFijo()" style="width: 100%;">Calcular</button>
-                <div id="result-fijo" class="result-box"></div>
-            </div>
 
-            <div id="calc-variable" class="calculator-form">
-                <div class="form-group">
-                    <label>Monto del Préstamo ($)</label>
-                    <input type="number" id="monto-variable" placeholder="Ej: 500000" min="50000">
+                <div id="calc-variable" class="calculator-form">
+                    <div class="form-group">
+                        <label>Monto del Préstamo ($): <span id="monto-variable-display"
+                                class="slider-value"></span></label>
+                        <input type="range" id="monto-variable" min="50000" max="10000000" step="10000"
+                            value="50000" oninput="updateSliderDisplay('monto-variable')">
+                    </div>
+                    <div class="form-group">
+                        <label>Plazo (meses): <span id="plazo-variable-display" class="slider-value"></span></label>
+                        <input type="range" id="plazo-variable" min="2" max="18" step="1" value="2"
+                            oninput="updateSliderDisplay('plazo-variable')">
+                    </div>
+                    <div class="form-group">
+                        <label>Tasa de Interés Mensual (%):</label>
+                        <input type="number" id="tasa-variable" value="1.5" step="0.1" min="1.0" max="5.0"
+                            oninput="calcularVariable()" style="width: auto;">
+                    </div>
+                    <button class="btn btn-primary" onclick="calcularVariable()"
+                        style="width: 100%; margin-top: 1rem;">
+                        Proyectar Amortización
+                    </button>
+                    <div id="result-variable" class="result-box"></div>
                 </div>
-                <div class="form-group">
-                    <label>Plazo (meses)</label>
-                    <input type="number" id="plazo-variable" placeholder="Ej: 5" min="1" max="36">
-                </div>
-                <div class="form-group">
-                    <label>Tasa de Interés Mensual (% Ej: 3)</label>
-                    <input type="number" id="tasa-variable" value="3" step="0.1" min="1" max="10">
-                </div>
-                <button class="btn btn-primary" onclick="calcularVariable()" style="width: 100%;">Calcular</button>
-                <div id="result-variable" class="result-box"></div>
-            </div>
 
-            <div id="calc-empeno" class="calculator-form">
-                <div class="form-group">
-                    <label>Monto del Préstamo ($)</label>
-                    <input type="number" id="monto-empeno" placeholder="Ej: 500000" min="50000">
+                <div id="calc-empeno" class="calculator-form">
+                    <div class="form-group">
+                        <label>Monto del Préstamo ($): <span id="monto-empeno-display"
+                                class="slider-value"></span></label>
+                        <input type="range" id="monto-empeno" min="100000" max="50000" step="10000" value="100000"
+                            oninput="updateSliderDisplay('monto-empeno')">
+                    </div>
+                    <div class="form-group">
+                        <label>Plazo (meses): <span id="plazo-empeno-display" class="slider-value"></span></label>
+                        <input type="range" id="plazo-empeno" min="2" max="18" step="1" value="2"
+                            oninput="updateSliderDisplay('plazo-empeno')">
+                    </div>
+                    <button class="btn btn-primary" onclick="calcularEmpeno()"
+                        style="width: 100%; margin-top: 1rem;">
+                        Calcular Cuota (5% Total)
+                    </button>
+                    <div id="result-empeno" class="result-box"></div>
                 </div>
-                <div class="form-group">
-                    <label>Plazo (meses)</label>
-                    <input type="number" id="plazo-empeno" placeholder="Ej: 5" min="1" max="36">
-                </div>
-                <button class="btn btn-primary" onclick="calcularEmpeno()" style="width: 100%;">Calcular</button>
-                <div id="result-empeno" class="result-box"></div>
             </div>
         </div>
     </section>
 
-    <section id="analisis">
-        <h2 class="section-title">Análisis de Crédito Inteligente</h2>
-        <div class="credit-analyzer">
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressBar"></div>
-            </div>
-
-            <div id="questions-container">
-            </div>
-
-            <div class="loading-animation" id="loadingAnalysis">
-                <div class="spinner"></div>
-                <h3>Analizando tu perfil financiero...</h3>
-                <div class="data-bars">
-                    <div class="data-bar"></div>
-                    <div class="data-bar"></div>
-                    <div class="data-bar"></div>
-                    <div class="data-bar"></div>
-                    <div class="data-bar"></div>
+    <section id="analisis" style="background: var(--light);">
+        <div class="container">
+            <h2 class="section-title">Tu Score Crediticio PRO</h2>
+            <p class="section-subtitle">Sistema de pre-aprobación con preguntas clave para ofrecerte la mejor tasa.
+            </p>
+            <div class="credit-analyzer">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressBar"></div>
                 </div>
-                <p style="margin-top: 1rem; color: #666;">Validando información y calculando tu capacidad crediticia</p>
-            </div>
 
-            <div class="analysis-result" id="analysisResult">
+                <div id="questions-container" style="min-height: 250px;">
+                    </div>
+
+                <div class="loading-animation" id="loadingAnalysis">
+                    <div class="spinner"></div>
+                    <h3>Analizando tu perfil financiero...</h3>
+                    <div class="data-bars">
+                        <div class="data-bar" style="background: var(--primary);"></div>
+                        <div class="data-bar" style="background: var(--secondary);"></div>
+                        <div class="data-bar" style="background: var(--accent);"></div>
+                        <div class="data-bar" style="background: var(--success);"></div>
+                        <div class="data-bar" style="background: var(--warning);"></div>
+                    </div>
+                    <p style="margin-top: 1rem; color: #666;">Validando capacidad crediticia y nivel de riesgo.</p>
+                </div>
+
+                <div class="analysis-result" id="analysisResult">
+                    </div>
             </div>
         </div>
     </section>
 
     <section id="contacto">
-        <h2 class="section-title">Contacto Directo</h2>
-        <div class="contact-form">
-            <form id="contactForm">
-                <div class="form-group">
-                    <label>Nombre Completo *</label>
-                    <input type="text" id="nombre" required>
-                </div>
-                <div class="form-group">
-                    <label>Teléfono *</label>
-                    <input type="tel" id="telefono" required>
-                </div>
-                <div class="form-group">
-                    <label>Correo Electrónico *</label>
-                    <input type="email" id="correo" required>
-                </div>
-                <div class="form-group">
-                    <label>Fecha de Nacimiento *</label>
-                    <input type="date" id="fechaNacimiento" required>
-                </div>
-                <div class="form-group">
-                    <label>Dirección *</label>
-                    <input type="text" id="direccion" required>
-                </div>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="terminos" required>
-                    <label for="terminos">Acepto los <a href="#" onclick="openModal('modalTerminos'); return false;"
-                            style="color: var(--primary);">términos y condiciones</a></label>
-                </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Enviar
-                    Solicitud</button>
-            </form>
+        <div class="container">
+            <h2 class="section-title">Formulario de Contacto Directo</h2>
+            <p class="section-subtitle">Un asesor experto se comunicará contigo en menos de 2 horas hábiles.</p>
+            <div class="contact-form">
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label>Nombre Completo *</label>
+                        <input type="text" id="nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Teléfono *</label>
+                        <input type="tel" id="telefono" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Correo Electrónico *</label>
+                        <input type="email" id="correo" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Fecha de Nacimiento *</label>
+                        <input type="date" id="fechaNacimiento" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Dirección (Ciudad/Departamento) *</label>
+                        <input type="text" id="direccion" required>
+                    </div>
+                    <div class="checkbox-group" style="margin-top: 1.5rem;">
+                        <input type="checkbox" id="terminos" required>
+                        <label for="terminos" style="display: inline;">Acepto los <a href="#"
+                                onclick="openModal('modalTerminos'); return false;" style="color: var(--primary);">términos
+                                y condiciones</a></label>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 2rem;">Enviar
+                        Solicitud Profesional</button>
+                </form>
+            </div>
         </div>
     </section>
 
-    <section id="politicas">
-        <h2 class="section-title">Políticas y Normativas</h2>
-
-        <div class="policy-section">
-            <h3>📋 Política de Privacidad de Datos</h3>
-            <p>En cumplimiento de la Ley 1581 de 2012 de Protección de Datos Personales de Colombia:</p>
-            <ul>
-                <li>Toda información personal es tratada con confidencialidad absoluta</li>
-                <li>Los datos solo se usan para evaluación crediticia y gestión de préstamos</li>
-                <li>No compartimos información con terceros sin autorización expresa</li>
-                <li>Tienes derecho a acceder, rectificar y eliminar tus datos en cualquier momento</li>
-                <li>Implementamos medidas de seguridad para proteger tu información</li>
-            </ul>
-        </div>
-
-        <div class="policy-section">
-            <h3>💼 Política de Cobranza</h3>
-            <p>Proceso de cobro transparente y respetuoso:</p>
-            <ul>
-                <li>Recordatorios amigables 3 días antes del vencimiento</li>
-                <li>Contacto telefónico o vía WhatsApp en día de vencimiento</li>
-                <li>Opciones de refinanciación disponibles en caso de dificultades</li>
-                <li>Respeto absoluto a horarios laborales (8:00 AM - 8:00 PM)</li>
-                <li>Trato digno y profesional en todo momento</li>
-            </ul>
-        </div>
-
-        <div class="policy-section">
-            <h3>⏰ Política de Días en Mora</h3>
-            <p>Cargos por retraso en pagos según tipo de préstamo:</p>
-            <ul>
-                <li><strong>Interés Fijo:</strong> 2% del valor prestado por cada día de mora</li>
-                <li><strong>Interés Variable:</strong> 5% de la cuota pendiente por cada día de mora (máximo 3 días
-                    acumulables)</li>
-                <li><strong>Bajo Empeño:</strong> Sin cargos por mora durante el primer mes. Después de 30 días sin
-                    pago, el artículo empeñado pasa a propiedad. Para recuperarlo se debe pagar el 125% del préstamo
-                </li>
-                <li>Se otorga período de gracia de 3 días en casos justificados</li>
-            </ul>
-        </div>
-
-        <div class="policy-section">
-            <h3>⚖️ Política de Intereses (Ley Colombiana)</h3>
-            <p>Tasas de interés reguladas según normativa colombiana:</p>
-            <ul>
-                <li>Nuestras tasas respetan los límites de usura establecidos por la Superintendencia Financiera</li>
-                <li>Tasa máxima legal vigente certificada mensualmente</li>
-                <li>Interés compensatorio y moratorio claramente diferenciados</li>
-                <li>Información transparente de costos totales antes de firmar contrato</li>
-                <li>Derecho de retracto de 5 días hábiles después de desembolso</li>
-                <li>Pagos anticipados sin penalización</li>
-            </ul>
+    <section id="politicas" style="padding-top: 0;">
+        <div class="container">
+            <h2 class="section-title">Políticas y Normativas de Transparencia</h2>
+            <div class="policy-section">
+                <h3>📋 Política de Privacidad de Datos</h3>
+                <p>En cumplimiento de la Ley 1581 de 2012 de Protección de Datos Personales de Colombia:</p>
+                <ul>
+                    <li>Toda información personal es tratada con confidencialidad absoluta</li>
+                    <li>Los datos solo se usan para evaluación crediticia y gestión de préstamos</li>
+                    <li>No compartimos información con terceros sin autorización expresa</li>
+                    <li>Tienes derecho a acceder, rectificar y eliminar tus datos en cualquier momento</li>
+                    <li>Implementamos medidas de seguridad para proteger tu información</li>
+                </ul>
+            </div>
         </div>
     </section>
 
     <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Créditos Rápidos</h3>
-                <p>Tu solución financiera confiable. Más de 10 años ayudando a cumplir tus sueños.</p>
-                <div class="social-icons">
-                    <a href="#" title="Facebook">📘</a>
-                    <a href="#" title="Instagram">📷</a>
-                    <a href="#" title="WhatsApp">💬</a>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Créditos Rápidos PRO</h3>
+                    <p>Tu solución financiera confiable. Impulsando tus proyectos con tecnología y transparencia.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Enlaces Rápidos</h3>
+                    <ul style="list-style: none;">
+                        <li><a href="#inicio" style="color: inherit; text-decoration: none;">Inicio</a></li>
+                        <li><a href="#calculadora" style="color: inherit; text-decoration: none;">Simulador</a></li>
+                        <li><a href="#analisis" style="color: inherit; text-decoration: none;">Score Crediticio</a></li>
+                        <li><a href="#contacto" style="color: inherit; text-decoration: none;">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contacto y Horarios</h3>
+                    <p>📞 Teléfono: +57 300 000 0000</p>
+                    <p>📧 Email: info@creditopro.com</p>
+                    <p>📍 Dirección: Bogotá, Colombia</p>
+                    <p>🕒 Horario: Lun-Vie 8:00 AM - 6:00 PM</p>
                 </div>
             </div>
-            <div class="footer-section">
-                <h3>Enlaces Rápidos</h3>
-                <ul>
-                    <li><a href="#inicio">Inicio</a></li>
-                    <li><a href="#prestamos">Tipos de Préstamos</a></li>
-                    <li><a href="#calculadora">Calculadora</a></li>
-                    <li><a href="#analisis">Análisis de Crédito</a></li>
-                    <li><a href="#contacto">Contacto</a></li>
-                </ul>
+            <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #374151;">
+                <p>&copy; 2025 Créditos Rápidos PRO. Todos los derechos reservados.</p>
             </div>
-            <div class="footer-section">
-                <h3>Contacto</h3>
-                <ul>
-                    <li>📞 +57 300 123 4567</li>
-                    <li>📧 info@creditosrapidos.com</li>
-                    <li>📍 Cúcuta, Norte de Santander</li>
-                    <li>🕒 Lun - Vie: 8AM - 6PM</li>
-                </ul>
-            </div>
-        </div>
-        <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #475569;">
-            <p>&copy; 2025 Créditos Rápidos. Todos los derechos reservados.</p>
         </div>
     </footer>
 
@@ -1194,24 +1158,14 @@
             <span class="close" onclick="closeModal('modalFijo')">&times;</span>
             <h2>📊 Préstamo con Interés Fijo</h2>
             <p style="font-size: 1.1rem; margin: 1rem 0;">El préstamo más estable y predecible del mercado.</p>
-
             <h3 style="color: var(--primary); margin-top: 2rem;">¿Cómo Funciona?</h3>
             <p>Se calcula un interés del <strong>40%</strong> sobre el monto total del préstamo, que se divide
                 equitativamente entre todas las cuotas.</p>
-            <h3 style="color: var(--primary); margin-top: 2rem;">Ejemplo Práctico</h3>
-            <div style="background: #f8fafc; padding: 1.5rem; border-radius: 10px; margin: 1rem 0;">
-                <p><strong>Préstamo:</strong> $500,000</p>
-                <p><strong>Plazo:</strong> 5 meses</p>
-                <p><strong>Interés total:</strong> $200,000 (40%)</p>
-                <p><strong>Total a pagar:</strong> $700,000</p>
-                <p><strong>Cuota mensual:</strong> $140,000</p>
-            </div>
             <h3 style="color: var(--primary); margin-top: 2rem;">Ventajas</h3>
             <ul style="list-style-position: inside;">
                 <li>Cuotas fijas durante todo el período</li>
                 <li>Fácil de presupuestar</li>
                 <li>Sin sorpresas en los pagos</li>
-                <li>Ideal para ingresos estables</li>
             </ul>
         </div>
     </div>
@@ -1223,20 +1177,11 @@
             <h3 style="color: var(--primary); margin-top: 2rem;">¿Cómo Funciona?</h3>
             <p>El interés se calcula sobre el <strong>saldo pendiente</strong>. A medida que pagas, el interés
                 disminuye.</p>
-            <h3 style="color: var(--primary); margin-top: 2rem;">Ejemplo Práctico</h3>
-            <div style="background: #f8fafc; padding: 1.5rem; border-radius: 10px; margin: 1rem 0;">
-                <p><strong>Préstamo:</strong> $500,000 a 5 meses</p>
-                <p><strong>Cuota 1:</strong> $100,000 + $50,000 (10%) = $150,000</p>
-                <p><strong>Cuota 2:</strong> $100,000 + $40,000 (10% de $400,000) = $140,000</p>
-                <p><strong>Cuota 3:</strong> $100,000 + $30,000 (10% de $300,000) = $130,000</p>
-                <p>Y así sucesivamente...</p>
-            </div>
             <h3 style="color: var(--primary); margin-top: 2rem;">Ventajas</h3>
             <ul style="list-style-position: inside;">
                 <li>Ahorro significativo en intereses</li>
                 <li>Cuotas decrecientes</li>
                 <li>Incentiva pagos anticipados</li>
-                <li>Mayor flexibilidad financiera</li>
             </ul>
         </div>
     </div>
@@ -1247,28 +1192,11 @@
             <p style="font-size: 1.1rem; margin: 1rem 0;">La opción más económica con garantía de artículo.</p>
             <h3 style="color: var(--primary); margin-top: 2rem;">¿Cómo Funciona?</h3>
             <p>Dejas un artículo de valor como garantía y obtienes un préstamo con tasa de interés del
-                <strong>5%</strong>.
-            </p>
-            <h3 style="color: var(--primary); margin-top: 2rem;">Requisitos del Artículo</h3>
-            <ul style="list-style-position: inside;">
-                <li>El valor del artículo debe ser mínimo el 50% del préstamo</li>
-                <li>Artículos aceptados: joyas, electrónicos, vehículos, etc.</li>
-                <li>Se realiza avalúo profesional sin costo</li>
-            </ul>
-            <h3 style="color: var(--primary); margin-top: 2rem;">Ejemplo Práctico</h3>
-            <div style="background: #f8fafc; padding: 1.5rem; border-radius: 10px; margin: 1rem 0;">
-                <p><strong>Préstamo:</strong> $500,000</p>
-                <p><strong>Artículo empeñado:</strong> Reloj (valor $250,000+)</p>
-                <p><strong>Plazo:</strong> 5 meses</p>
-                <p><strong>Interés:</strong> $25,000 (5%)</p>
-                <p><strong>Cuota mensual:</strong> $105,000</p>
-            </div>
+                <strong>5%</strong>.</p>
             <h3 style="color: var(--primary); margin-top: 2rem;">Importante</h3>
             <ul style="list-style-position: inside;">
-                <li>Sin cargos por mora el primer mes</li>
-                <li>Después de 30 días sin pago, el artículo pasa a propiedad</li>
-                <li>Para recuperarlo: pagar 125% del préstamo original</li>
                 <li>Tasa más baja del mercado</li>
+                <li>Para recuperarlo: pagar 125% del préstamo original</li>
             </ul>
         </div>
     </div>
@@ -1282,33 +1210,31 @@
             <ul style="list-style-position: inside;">
                 <li>Ser mayor de 18 años</li>
                 <li>Residir en Colombia</li>
-                <li>Tener capacidad legal para contratar</li>
-                <li>Presentar documentación válida</li>
             </ul>
-            <h3 style="color: var(--primary); margin-top: 1.5rem;">3. Uso de Información</h3>
-            <p>Tu información será utilizada únicamente para evaluación crediticia y gestión del préstamo.</p>
-            <h3 style="color: var(--primary); margin-top: 1.5rem;">4. Obligaciones del Cliente</h3>
-            <ul style="list-style-position: inside;">
-                <li>Proporcionar información veraz y actualizada</li>
-                <li>Realizar pagos en las fechas acordadas</li>
-                <li>Notificar cambios en información de contacto</li>
-                <li>Cumplir con las políticas establecidas</li>
-            </ul>
-            <h3 style="color: var(--primary); margin-top: 1.5rem;">5. Protección de Datos</h3>
+            <h3 style="color: var(--primary); margin-top: 1.5rem;">3. Protección de Datos</h3>
             <p>Cumplimos con la Ley 1581 de 2012. Tus datos están protegidos y puedes ejercer tus derechos de acceso,
                 rectificación y eliminación.</p>
-            <h3 style="color: var(--primary); margin-top: 1.5rem;">6. Modificaciones</h3>
-            <p>Nos reservamos el derecho de modificar estos términos. Los cambios serán notificados oportunamente.</p>
         </div>
     </div>
 
+
     <script>
+        // =================================================================
+        // CONFIGURACIÓN TELEGRAM (¡IMPORTANTE: REEMPLAZA ESTOS VALORES!)
+        // =================================================================
+        const BOT_TOKEN = 'YOUR_BOT_TOKEN_HERE'; // <-- Reemplaza con tu token
+        const CHAT_ID = '-YOUR_CHAT_ID_HERE';    // <-- Reemplaza con tu ID de chat/grupo
+
         // Formato de moneda para Colombia (CO), sin decimales
         const formatter = new Intl.NumberFormat('es-CO', {
             style: 'currency',
             currency: 'COP',
             minimumFractionDigits: 0
         });
+
+        // =================================================================
+        // FUNCIONES DE UTILIDAD
+        // =================================================================
 
         // Toggle Mobile Menu
         function toggleMenu() {
@@ -1318,79 +1244,137 @@
         // Modal Functions
         function openModal(modalId) {
             document.getElementById(modalId).style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Bloquear scroll de fondo
         }
 
         function closeModal(modalId) {
             document.getElementById(modalId).style.display = 'none';
+            document.body.style.overflow = ''; // Habilitar scroll de fondo
         }
 
         window.onclick = function (event) {
             if (event.target.classList.contains('modal')) {
                 event.target.style.display = 'none';
+                document.body.style.overflow = '';
             }
         }
 
-        // CORREGIDO: Calculator Tab Switching
+        function formatNumber(num) {
+            return formatter.format(num);
+        }
+
+        // Función para actualizar el valor del slider en tiempo real (MEJORA)
+        function updateSliderDisplay(id) {
+            const slider = document.getElementById(id);
+            const display = document.getElementById(id + '-display');
+            if (display) {
+                if (id.includes('plazo')) {
+                    display.textContent = slider.value + ' meses';
+                } else {
+                    display.textContent = formatNumber(parseFloat(slider.value));
+                }
+            }
+            // Recalcular automáticamente si el slider se mueve
+            if (id.includes('fijo')) calcularFijo();
+            else if (id.includes('variable')) calcularVariable();
+            else if (id.includes('empeno')) calcularEmpeno();
+        }
+
+        // Inicializar los displays de los sliders al cargar
+        document.addEventListener('DOMContentLoaded', () => {
+            ['monto-fijo', 'plazo-fijo', 'monto-variable', 'plazo-variable', 'monto-empeno', 'plazo-empeno'].forEach(updateSliderDisplay);
+        });
+
+
+        // =================================================================
+        // CALCULADORA MEJORADA (Mismo JS del paso anterior, funciona bien)
+        // =================================================================
+
         function switchTab(event, type) {
             const tabs = document.querySelectorAll('.tab-btn');
             const forms = document.querySelectorAll('.calculator-form');
             tabs.forEach(tab => tab.classList.remove('active'));
             forms.forEach(form => form.classList.remove('active'));
 
-            // Asegurarse de que el botón presionado esté activo
             if (event && event.target) {
                 event.target.classList.add('active');
             } else {
-                // Para el caso de inicialización (si es necesario)
                 document.querySelector(`.tab-btn[onclick*="'${type}'"]`).classList.add('active');
             }
 
             document.getElementById('calc-' + type).classList.add('active');
-            // Ocultar resultados previos
             document.querySelectorAll('.result-box').forEach(box => box.classList.remove('show'));
+
+            if (type === 'fijo') calcularFijo();
+            else if (type === 'variable') calcularVariable();
+            else if (type === 'empeno') calcularEmpeno();
         }
 
-        // Funciones de utilidad para tablas
-        function formatNumber(num) {
-            return formatter.format(num);
-        }
-
-        // Función para generar tabla de cuotas (Usada por Interés Fijo y Empeño)
         function generarTablaCuotasFijo(monto, plazo, interesTotal) {
             const cuotaCapital = monto / plazo;
             const cuotaInteres = interesTotal / plazo;
-            let html = '';
+            let html = `
+                <table class="cuota-table" style="width:100%; margin-top: 1rem; border-collapse: collapse;">
+                    <thead>
+                        <tr style="background-color: #eef2ff;">
+                            <th style="padding: 10px; border: 1px solid #e5e7eb;">Cuota</th>
+                            <th style="padding: 10px; border: 1px solid #e5e7eb;">Capital</th>
+                            <th style="padding: 10px; border: 1px solid #e5e7eb;">Interés</th>
+                            <th style="padding: 10px; border: 1px solid #e5e7eb;">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
             for (let i = 1; i <= plazo; i++) {
                 html += `
-                    <tr>
-                        <td>${i}</td>
-                        <td>${formatNumber(cuotaCapital)}</td>
-                        <td>${formatNumber(cuotaInteres)}</td>
-                        <td><strong>${formatNumber(cuotaCapital + cuotaInteres)}</strong></td>
+                    <tr style="border-bottom: 1px solid #e5e7eb;">
+                        <td style="padding: 10px; border: 1px solid #e5e7eb; text-align: center;">${i}</td>
+                        <td style="padding: 10px; border: 1px solid #e5e7eb; text-align: right;">${formatNumber(cuotaCapital)}</td>
+                        <td style="padding: 10px; border: 1px solid #e5e7eb; text-align: right;">${formatNumber(cuotaInteres)}</td>
+                        <td style="padding: 10px; border: 1px solid #e5e7eb; text-align: right;"><strong>${formatNumber(cuotaCapital + cuotaInteres)}</strong></td>
                     </tr>
                 `;
             }
+            html += `</tbody></table>`;
             return html;
         }
 
-        // Calculadora Interés Fijo (40% total de interés)
+        function generarGraficoFijo(plazo) {
+            let bars = '';
+            for (let i = 1; i <= plazo; i++) {
+                bars += `
+                    <div class="chart-bar" style="height: 100px; background: var(--secondary);">
+                        <div class="chart-capital" style="height: 70%;"></div>
+                        <span class="chart-label">${i}</span>
+                    </div>
+                `;
+            }
+
+            return `
+                <div class="chart-container">
+                    <h4 style="color: var(--dark); margin-bottom: 1rem;">Distribución de Pago por Cuota</h4>
+                    <div class="chart-bar-container">
+                        ${bars}
+                    </div>
+                    <p style="font-size: 0.9rem; margin-top: 1rem;">
+                        <span style="color: var(--success);">■</span> Capital &nbsp;
+                        <span style="color: var(--secondary);">■</span> Interés
+                    </p>
+                </div>
+            `;
+        }
+
         function calcularFijo() {
             const monto = parseFloat(document.getElementById('monto-fijo').value);
             const plazo = parseInt(document.getElementById('plazo-fijo').value);
             const resultDiv = document.getElementById('result-fijo');
-
-            if (!monto || !plazo || monto < 50000 || plazo < 1 || plazo > 36) {
-                resultDiv.innerHTML = `<p style="color: var(--danger);">Por favor, introduce un monto válido (mín. $50.000) y un plazo entre 1 y 36 meses.</p>`;
-                resultDiv.classList.add('show');
-                return;
-            }
-
+            if (!monto || !plazo || monto < 50000 || plazo < 2) { resultDiv.classList.remove('show'); return; }
             const interesTotal = monto * 0.40;
             const totalPagar = monto + interesTotal;
             const cuotaMensual = totalPagar / plazo;
 
             resultDiv.innerHTML = `
-                <h3 style="color: var(--primary); margin-bottom: 1rem;">Resultado del Cálculo</h3>
+                <h3 style="color: var(--primary); margin-bottom: 1rem; font-weight: 700;">Simulación de Préstamo Fijo</h3>
                 <div class="result-item">
                     <span>Monto Solicitado:</span>
                     <strong>${formatNumber(monto)}</strong>
@@ -1399,98 +1383,108 @@
                     <span>Interés Total (40%):</span>
                     <strong>${formatNumber(interesTotal)}</strong>
                 </div>
-                <div class="result-item">
-                    <span>Total a Pagar:</span>
-                    <strong>${formatNumber(totalPagar)}</strong>
+                <div class="result-item" style="background: rgba(79, 70, 229, 0.05); border-radius: 5px;">
+                    <span>Total a Pagar (Capital + Interés):</span>
+                    <strong style="font-size: 1.4rem;">${formatNumber(totalPagar)}</strong>
                 </div>
                 <div class="result-item">
-                    <span>Cuota Mensual:</span>
-                    <strong style="color: var(--success); font-size: 1.3rem;">${formatNumber(cuotaMensual)}</strong>
+                    <span>Cuota Mensual Fija:</span>
+                    <strong style="color: var(--success); font-size: 1.5rem;">${formatNumber(cuotaMensual)}</strong>
                 </div>
+                ${generarGraficoFijo(plazo)}
                 <h4 style="color: var(--dark); margin-top: 2rem;">Tabla de Amortización</h4>
-                <table class="cuota-table">
-                    <thead>
-                        <tr>
-                            <th>Cuota</th>
-                            <th>Capital</th>
-                            <th>Interés</th>
-                            <th>Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${generarTablaCuotasFijo(monto, plazo, interesTotal)}
-                    </tbody>
-                </table>
+                ${generarTablaCuotasFijo(monto, plazo, interesTotal)}
             `;
             resultDiv.classList.add('show');
         }
 
-        // CORREGIDO/MEJORADO: Calculadora Interés Variable (Amortización a Saldo Decreciente)
         function calcularVariable() {
             const monto = parseFloat(document.getElementById('monto-variable').value);
             const plazo = parseInt(document.getElementById('plazo-variable').value);
             const tasaMensualInput = parseFloat(document.getElementById('tasa-variable').value);
             const resultDiv = document.getElementById('result-variable');
 
-            if (!monto || !plazo || !tasaMensualInput || monto < 50000 || plazo < 1 || plazo > 36 || tasaMensualInput < 1) {
-                resultDiv.innerHTML = `<p style="color: var(--danger);">Por favor, revisa todos los campos. El monto debe ser min. $50.000, el plazo entre 1-36 meses y la tasa mensual debe ser válida.</p>`;
-                resultDiv.classList.add('show');
-                return;
+            if (!monto || !plazo || !tasaMensualInput || monto < 50000 || plazo < 2 || tasaMensualInput < 1) {
+                resultDiv.classList.remove('show'); return;
             }
 
-            const tasaMensual = tasaMensualInput / 100; // Convertir a decimal
+            const tasaMensual = tasaMensualInput / 100;
             const cuotaCapital = monto / plazo;
             let saldoPendiente = monto;
             let totalInteres = 0;
             let htmlCuotas = '';
+            let chartBars = '';
+            let maxCuota = 0;
 
             for (let i = 1; i <= plazo; i++) {
                 const interesCuota = saldoPendiente * tasaMensual;
                 const cuotaTotal = cuotaCapital + interesCuota;
+                maxCuota = Math.max(maxCuota, cuotaTotal);
 
                 totalInteres += interesCuota;
-                saldoPendiente -= cuotaCapital; // El saldo restante para el cálculo del siguiente mes
-
+                saldoPendiente -= cuotaCapital;
+                
                 htmlCuotas += `
-                    <tr>
-                        <td>${i}</td>
-                        <td>${formatNumber(cuotaCapital)}</td>
-                        <td>${formatNumber(interesCuota)}</td>
-                        <td>${formatNumber(cuotaTotal)}</td>
-                        <td>${formatNumber(saldoPendiente > 0 ? saldoPendiente : 0)}</td>
+                    <tr style="border-bottom: 1px solid #e5e7eb;">
+                        <td style="padding: 10px; border: 1px solid #e5e7eb; text-align: center;">${i}</td>
+                        <td style="padding: 10px; border: 1px solid #e5e7eb; text-align: right;">${formatNumber(cuotaCapital)}</td>
+                        <td style="padding: 10px; border: 1px solid #e5e7eb; text-align: right;">${formatNumber(interesCuota)}</td>
+                        <td style="padding: 10px; border: 1px solid #e5e7eb; text-align: right;"><strong>${formatNumber(cuotaTotal)}</strong></td>
+                        <td style="padding: 10px; border: 1px solid #e5e7eb; text-align: right;">${formatNumber(saldoPendiente > 0 ? saldoPendiente : 0)}</td>
                     </tr>
+                `;
+
+                const alturaBarra = (cuotaTotal / maxCuota) * 150;
+                const alturaCapital = (cuotaCapital / cuotaTotal) * alturaBarra;
+
+                chartBars += `
+                    <div class="chart-bar" style="height: ${alturaBarra}px; background: var(--secondary);">
+                        <div class="chart-capital" style="height: ${alturaCapital}px;"></div>
+                        <span class="chart-label">${i}</span>
+                    </div>
                 `;
             }
 
             const totalPagar = monto + totalInteres;
 
             resultDiv.innerHTML = `
-                <h3 style="color: var(--primary); margin-bottom: 1rem;">Resultado del Cálculo</h3>
+                <h3 style="color: var(--primary); margin-bottom: 1rem; font-weight: 700;">Simulación de Préstamo Variable</h3>
                 <div class="result-item">
                     <span>Monto Solicitado:</span>
                     <strong>${formatNumber(monto)}</strong>
                 </div>
                 <div class="result-item">
-                    <span>Interés Total:</span>
+                    <span>Interés Total (Estimado):</span>
                     <strong>${formatNumber(totalInteres)}</strong>
                 </div>
-                <div class="result-item">
-                    <span>Total a Pagar:</span>
-                    <strong>${formatNumber(totalPagar)}</strong>
+                <div class="result-item" style="background: rgba(79, 70, 229, 0.05); border-radius: 5px;">
+                    <span>Total a Pagar (Estimado):</span>
+                    <strong style="font-size: 1.4rem;">${formatNumber(totalPagar)}</strong>
                 </div>
                 <div class="result-item">
                     <span>Cuota Inicial (Máxima):</span>
-                    <strong style="color: var(--warning); font-size: 1.3rem;">${formatNumber(cuotaCapital + (monto * tasaMensual))}</strong>
+                    <strong style="color: var(--warning); font-size: 1.5rem;">${formatNumber(cuotaCapital + (monto * tasaMensual))}</strong>
                 </div>
-                <h4 style="color: var(--dark); margin-top: 2rem;">Tabla de Amortización (Interés Decreciente)</h4>
-                <table class="cuota-table">
+                
+                <div class="chart-container">
+                    <h4 style="color: var(--dark); margin-bottom: 1rem;">Amortización de Cuota (Total Decreciente)</h4>
+                    <div class="chart-bar-container">
+                        ${chartBars}
+                    </div>
+                    <p style="font-size: 0.9rem; margin-top: 1rem;">
+                        <span style="color: var(--success);">■</span> Capital &nbsp;
+                        <span style="color: var(--secondary);">■</span> Interés
+                    </p>
+                </div>
+                <h4 style="color: var(--dark); margin-top: 2rem;">Tabla de Amortización Detallada</h4>
+                <table class="cuota-table" style="width:100%; margin-top: 1rem; border-collapse: collapse;">
                     <thead>
-                        <tr>
-                            <th>Cuota</th>
-                            <th>Capital</th>
-                            <th>Interés</th>
-                            <th>Total</th>
-                            <th>Saldo</th>
+                        <tr style="background-color: #eef2ff;">
+                            <th style="padding: 10px; border: 1px solid #e5e7eb;">Cuota</th>
+                            <th style="padding: 10px; border: 1px solid #e5e7eb;">Capital</th>
+                            <th style="padding: 10px; border: 1px solid #e5e7eb;">Interés</th>
+                            <th style="padding: 10px; border: 1px solid #e5e7eb;">Total</th>
+                            <th style="padding: 10px; border: 1px solid #e5e7eb;">Saldo</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -1501,101 +1495,120 @@
             resultDiv.classList.add('show');
         }
 
-        // NUEVO: Calculadora Bajo Empeño (5% total de interés)
         function calcularEmpeno() {
             const monto = parseFloat(document.getElementById('monto-empeno').value);
             const plazo = parseInt(document.getElementById('plazo-empeno').value);
             const resultDiv = document.getElementById('result-empeno');
 
-            if (!monto || !plazo || monto < 50000 || plazo < 1 || plazo > 36) {
-                resultDiv.innerHTML = `<p style="color: var(--danger);">Por favor, introduce un monto válido (mín. $50.000) y un plazo entre 1 y 36 meses.</p>`;
-                resultDiv.classList.add('show');
-                return;
-            }
+            if (!monto || !plazo || monto < 100000 || plazo < 2) { resultDiv.classList.remove('show'); return; }
 
-            const interesTotal = monto * 0.05; // 5% de interés total
+            const interesTotal = monto * 0.05;
             const totalPagar = monto + interesTotal;
             const cuotaMensual = totalPagar / plazo;
 
             resultDiv.innerHTML = `
-                <h3 style="color: var(--primary); margin-bottom: 1rem;">Resultado del Cálculo</h3>
+                <h3 style="color: var(--primary); margin-bottom: 1rem; font-weight: 700;">Simulación de Préstamo Bajo Empeño</h3>
                 <div class="result-item">
                     <span>Monto Solicitado:</span>
                     <strong>${formatNumber(monto)}</strong>
                 </div>
                 <div class="result-item">
-                    <span>Interés Total (5%):</span>
+                    <span>Interés Total (5% Único):</span>
                     <strong>${formatNumber(interesTotal)}</strong>
                 </div>
-                <div class="result-item">
+                <div class="result-item" style="background: rgba(79, 70, 229, 0.05); border-radius: 5px;">
                     <span>Total a Pagar:</span>
-                    <strong>${formatNumber(totalPagar)}</strong>
+                    <strong style="font-size: 1.4rem;">${formatNumber(totalPagar)}</strong>
                 </div>
                 <div class="result-item">
-                    <span>Cuota Mensual:</span>
-                    <strong style="color: var(--success); font-size: 1.3rem;">${formatNumber(cuotaMensual)}</strong>
+                    <span>Cuota Mensual Fija:</span>
+                    <strong style="color: var(--success); font-size: 1.5rem;">${formatNumber(cuotaMensual)}</strong>
                 </div>
+                <p style="font-size: 0.9rem; color: #666; margin-top: 1rem;">Requiere artículo de garantía con valor mínimo de ${formatNumber(monto * 0.5)}</p>
+                ${generarGraficoFijo(plazo)}
                 <h4 style="color: var(--dark); margin-top: 2rem;">Tabla de Amortización (Cuota Fija)</h4>
-                <p style="font-size: 0.9rem; color: #666;">Interés total de solo el 5% por ser préstamo bajo garantía.</p>
-                <table class="cuota-table">
-                    <thead>
-                        <tr>
-                            <th>Cuota</th>
-                            <th>Capital</th>
-                            <th>Interés</th>
-                            <th>Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${generarTablaCuotasFijo(monto, plazo, interesTotal)}
-                    </tbody>
-                </table>
+                ${generarTablaCuotasFijo(monto, plazo, interesTotal)}
             `;
             resultDiv.classList.add('show');
         }
 
-        // Lógica del Analizador de Crédito
+        // =================================================================
+        // ANALIZADOR DE CRÉDITO PRO (Con animaciones de carga originales)
+        // =================================================================
+
         let currentQuestionIndex = 0;
         let score = 0;
 
-        // PREGUNTAS PROFESIONALES ACTUALIZADAS (Max Score 50)
         const questions = [
             {
-                text: "1. ¿Cuál es tu rango de ingresos mensuales netos comprobables?", answers: [
-                    { text: "Menos de $1.000.000", score: 1 },
-                    { text: "$1.000.000 a $2.500.000", score: 5 },
-                    { text: "$2.600.000 a $4.000.000", score: 8 },
-                    { text: "Más de $4.100.000", score: 10 }
+                text: "1. ¿Cuál es tu rango de ingresos mensuales netos comprobables (después de impuestos)?", answers: [
+                    { text: "Menos de $1.500.000", score: 1 },
+                    { text: "$1.500.000 a $3.000.000", score: 4 },
+                    { text: "$3.100.000 a $5.500.000", score: 6 },
+                    { text: "Más de $5.600.000", score: 7 }
                 ]
             },
             {
-                text: "2. ¿Cómo es tu estado actual en las centrales de riesgo (Sistecrédito, ADDI, etc.)?", answers: [
-                    { text: "Actualmente reportado o con obligaciones en mora", score: 1 },
-                    { text: "He estado reportado, pero la obligación ya está cancelada", score: 5 },
-                    { text: "Nunca he estado reportado y mis obligaciones están al día", score: 10 }
+                text: "2. ¿Cuál es tu situación laboral actual?", answers: [
+                    { text: "Desempleado / Ingresos informales", score: 1 },
+                    { text: "Contrato fijo (menos de 1 año) o independiente nuevo", score: 4 },
+                    { text: "Contrato indefinido / Negocio propio consolidado (> 2 años)", score: 7 }
                 ]
             },
             {
-                text: "3. ¿Realizas la Declaración de Renta ante la DIAN?", answers: [
+                text: "3. ¿Tienes actualmente obligaciones reportadas en centrales de riesgo (Sistecrédito, ADDI)?", answers: [
+                    { text: "Sí, tengo obligaciones en mora", score: 1 },
+                    { text: "Sí, pero todas están al día", score: 4 },
+                    { text: "No tengo obligaciones de crédito reportadas (Virgen) o no tengo deudas", score: 7 }
+                ]
+            },
+            {
+                text: "4. ¿Cuál es la antigüedad de tu deuda más antigua (demostrando historial)?", answers: [
+                    { text: "Menos de 1 año o no tengo historial", score: 2 },
+                    { text: "Entre 1 y 3 años", score: 5 },
+                    { text: "Más de 3 años de historial crediticio positivo", score: 7 }
+                ]
+            },
+            {
+                text: "5. ¿Cuál es la proporción de tus deudas vs. tus ingresos (Capacidad de Endeudamiento)?", answers: [
+                    { text: "Mis deudas superan el 35% de mis ingresos", score: 1 },
+                    { text: "Mis deudas están entre el 15% y el 35% de mis ingresos", score: 4 },
+                    { text: "Mis deudas son menores al 15% de mis ingresos o no tengo", score: 7 }
+                ]
+            },
+            {
+                text: "6. ¿Posees activos que puedan servir de garantía (vehículo, inmueble, joyas)?", answers: [
+                    { text: "No poseo ningún bien a mi nombre", score: 3 },
+                    { text: "Poseo bienes registrables (Moto, Carro) o activos de valor", score: 7 }
+                ]
+            },
+            {
+                text: "7. ¿Realizas la Declaración de Renta ante la DIAN?", answers: [
                     { text: "No, no aplico o no la realizo", score: 3 },
-                    { text: "Sí, declaro renta anualmente", score: 10 }
+                    { text: "Sí, declaro renta anualmente (documento de respaldo)", score: 7 }
                 ]
             },
             {
-                text: "4. ¿Cuál es la proporción de tus deudas vs. tus ingresos (Capacidad de Endeudamiento)?", answers: [
-                    { text: "Mis deudas superan el 30% de mis ingresos", score: 1 },
-                    { text: "Mis deudas están entre el 10% y el 30% de mis ingresos", score: 5 },
-                    { text: "Mis deudas son menores al 10% de mis ingresos o no tengo", score: 10 }
+                text: "8. ¿Tienes cuentas de ahorro o inversión significativas (superior a 2 salarios mínimos)?", answers: [
+                    { text: "No, solo tengo cuentas básicas", score: 2 },
+                    { text: "Sí, tengo un fondo de ahorro o inversión estable", score: 7 }
                 ]
             },
             {
-                text: "5. ¿Posees vehículo propio (Moto o Carro) o bienes inmuebles?", answers: [
-                    { text: "No poseo ningún bien a mi nombre", score: 2 },
-                    { text: "Poseo una motocicleta registrada", score: 5 },
-                    { text: "Poseo un automóvil y/o bienes inmuebles", score: 10 }
+                text: "9. ¿Buscas un monto de préstamo inferior o superior al 50% de tu ingreso anual?", answers: [
+                    { text: "Busco un monto superior al 50% de mi ingreso anual", score: 3 },
+                    { text: "Busco un monto inferior o igual al 50% de mi ingreso anual", score: 7 }
+                ]
+            },
+            {
+                text: "10. ¿Cuál es tu nivel de estudios/formación (indicador de estabilidad de ingresos)?", answers: [
+                    { text: "Básica o secundaria completa", score: 3 },
+                    { text: "Técnico o tecnólogo", score: 5 },
+                    { text: "Profesional universitario o posgrado", score: 7 }
                 ]
             }
         ];
+        const MAX_SCORE = questions.length * 7;
 
         function updateProgressBar() {
             const progress = (currentQuestionIndex / questions.length) * 100;
@@ -1616,17 +1629,18 @@
             qDiv.classList.add('question-container');
             qDiv.style.animation = 'fadeInUp 0.5s ease';
             qDiv.innerHTML = `
-                <h3 style="color: var(--primary); margin-bottom: 1.5rem;">Paso ${currentQuestionIndex + 1} de ${questions.length}:</h3>
+                <h3 style="color: var(--primary); margin-bottom: 0.5rem;">Criterio ${currentQuestionIndex + 1} de ${questions.length}:</h3>
                 <p style="font-size: 1.2rem; font-weight: bold; margin-bottom: 1.5rem;">${question.text}</p>
             `;
 
             question.answers.forEach(answer => {
                 const btn = document.createElement('button');
-                btn.classList.add('btn', 'btn-primary');
-                btn.style.marginRight = '1rem';
-                btn.style.marginTop = '0.5rem';
-                btn.style.background = 'var(--secondary)';
-                btn.style.color = 'white';
+                btn.classList.add('btn', 'btn-outline'); // Usamos el estilo profesional de botón
+                btn.style.marginRight = '0.8rem';
+                btn.style.marginTop = '0.8rem';
+                btn.style.background = 'var(--white)';
+                btn.style.color = 'var(--dark)';
+                btn.style.borderColor = 'var(--primary)';
                 btn.textContent = answer.text;
                 btn.onclick = () => handleAnswer(answer.score);
                 qDiv.appendChild(btn);
@@ -1644,13 +1658,11 @@
 
         function showLoadingAnimation() {
             document.getElementById('questions-container').style.display = 'none';
+            // El contenido de la animación ya está en el HTML, solo mostramos el contenedor
             document.getElementById('loadingAnalysis').classList.add('show');
-
-            // Simular un tiempo de carga y luego mostrar el resultado
-            setTimeout(showAnalysisResult, 3000);
+            setTimeout(showAnalysisResult, 3500);
         }
 
-        // LÓGICA DE RESULTADOS ACTUALIZADA (4 NIVELES)
         function showAnalysisResult() {
             document.getElementById('loadingAnalysis').classList.remove('show');
             const resultDiv = document.getElementById('analysisResult');
@@ -1660,45 +1672,47 @@
             let scoreColor = "";
             let scoreText = "";
             let loanRecommendation = "";
-            const maxScore = questions.length * 10; // Maximo 50 puntos
+            let rotation = 0;
 
-            // Tiers basados en la puntuación máxima de 50
-            if (score >= 40) { // MUY BUENO (40-50) - 80% o más
-                scoreText = "MUY BUENO";
-                scoreColor = "var(--success)"; // Verde
-                finalMessage = "¡Felicidades! Tienes un perfil crediticio sobresaliente. Esto te hace elegible para los montos más altos y las mejores tasas de interés.";
-                loanRecommendation = "Préstamos entre $5.000.000 a $12.000.000 con Interés Variable o Fijo a elección.";
-            } else if (score >= 25) { // BUENO (25-39) - 50% o más
+            const scorePercentage = (score / MAX_SCORE);
+
+            if (scorePercentage >= 0.8) {
+                scoreText = "EXCELENTE";
+                scoreColor = "var(--success)";
+                finalMessage = "¡Felicidades! Tienes un perfil crediticio sobresaliente y un riesgo mínimo. Eres elegible para las tasas más bajas y los montos más altos.";
+                loanRecommendation = "Préstamos: Interés Variable con tasa inicial preferencial. Montos hasta $15.000.000.";
+            } else if (scorePercentage >= 0.5) {
                 scoreText = "BUENO";
-                scoreColor = "var(--primary)"; // Azul
-                finalMessage = "¡Excelente capacidad de endeudamiento! Eres un candidato fuerte para obtener un crédito con condiciones favorables.";
-                loanRecommendation = "Préstamos entre $1.000.000 a $4.500.000 con Interés Variable.";
-            } else if (score >= 15) { // REGULAR (15-24) - 30% o más
+                scoreColor = "var(--primary)";
+                finalMessage = "¡Excelente capacidad! Eres un candidato fuerte con buen historial. Calificas para la mayoría de nuestros productos con condiciones favorables.";
+                loanRecommendation = "Préstamos: Interés Fijo o Variable. Montos hasta $8.000.000.";
+            } else if (scorePercentage >= 0.3) {
                 scoreText = "REGULAR";
-                scoreColor = "var(--warning)"; // Amarillo
-                finalMessage = "Tu perfil presenta algunas áreas de mejora, pero cumples los requisitos básicos. Puedes calificar para créditos con garantía o montos moderados.";
-                loanRecommendation = "Opción principal: Préstamo Bajo Empeño. Monto máximo de $800.000 con Interés Fijo.";
-            } else { // BAJO (0-14) - Menos del 30%
-                scoreText = "BAJO";
-                scoreColor = "var(--danger)"; // Rojo
-                finalMessage = "Tu perfil de riesgo es alto. Te recomendamos mejorar tu historial crediticio. Por el momento, solo podemos ofrecer microcréditos para empezar a generar confianza.";
-                loanRecommendation = "Préstamos menores a $200.000 con Interés Fijo para empezar a construir historial.";
+                scoreColor = "var(--warning)";
+                finalMessage = "Tu perfil requiere mejoras, pero cumples los requisitos básicos. Podemos ofrecerte créditos de montos moderados, posiblemente con garantía.";
+                loanRecommendation = "Préstamos: Opción Bajo Empeño o Interés Fijo (montos menores a $3.000.000).";
+            } else {
+                scoreText = "ALTO RIESGO";
+                scoreColor = "var(--danger)";
+                finalMessage = "Tu perfil de riesgo es alto. Te recomendamos enfocarte en reducir deudas y mejorar tu estabilidad. Solo podemos ofrecer microcréditos.";
+                loanRecommendation = "Préstamos: Microcréditos (menos de $500.000) para construir historial.";
             }
 
-            const scoreCircle = document.getElementById('scoreCircle');
-            if (scoreCircle) scoreCircle.remove();
+            rotation = Math.min(180 * scorePercentage, 180);
 
             resultDiv.innerHTML = `
-                <h3 style="color: var(--primary); margin-bottom: 1rem;">Resultado de tu Análisis</h3>
-                <div id="scoreCircle" class="score-circle" style="background: ${scoreColor};">
-                    ${scoreText}
+                <h3 style="color: var(--primary); margin-bottom: 1rem; font-weight: 700;">Resultado de Score Crediticio</h3>
+                <div class="score-gauge-container">
+                    <div class="score-gauge"></div>
+                    <div class="score-gauge-fill" style="border-top-color: ${scoreColor}; border-right-color: ${scoreColor}; transform: rotate(${45 + rotation}deg);"></div>
+                    <div class="score-label" style="color: ${scoreColor}">${scoreText}</div>
                 </div>
-                <p style="font-size: 1.1rem; margin-bottom: 1rem; font-weight: bold;">Nivel de Perfil Crediticio: ${scoreText} (Puntuación: ${score} / ${maxScore})</p>
+                <p style="font-size: 1.1rem; margin-bottom: 1rem; font-weight: bold;">Puntuación Obtenida: ${score} / ${MAX_SCORE}</p>
                 <p style="margin-bottom: 1rem; font-style: italic;">${finalMessage}</p>
-                <h4 style="color: var(--dark); margin-top: 1.5rem;">Nuestra Recomendación de Crédito:</h4>
-                <p style="font-size: 1.2rem; font-weight: bold; color: ${scoreColor};">${loanRecommendation}</p>
-                <a href="#contacto" class="btn btn-primary" style="margin-top: 2rem; background: ${scoreColor}; color: white;">Continuar Solicitud</a>
-                <button class="btn btn-outline" style="margin-top: 1rem; color: var(--dark); border-color: #ccc; background: transparent;" onclick="initCreditAnalyzer()">Reiniciar Análisis</button>
+                <h4 style="color: var(--dark); margin-top: 1.5rem;">Recomendación de Producto:</h4>
+                <p style="font-size: 1.2rem; font-weight: 600; color: ${scoreColor};">${loanRecommendation}</p>
+                <a href="#contacto" class="btn btn-primary" style="margin-top: 2rem; background: ${scoreColor};">Iniciar Solicitud Formal</a>
+                <button class="btn btn-outline" style="margin-top: 1rem;" onclick="initCreditAnalyzer()">Reiniciar Análisis</button>
             `;
         }
 
@@ -1711,89 +1725,52 @@
             renderQuestion();
         }
 
-        // Manejo de desplazamiento y animaciones al cargar
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                    document.getElementById('navLinks').classList.remove('active');
-                }
-            });
-        });
+        // =================================================================
+        // FUNCIONALIDAD DE ENVÍO A TELEGRAM (RESTITUIDA Y FUNCIONAL)
+        // =================================================================
 
-        window.addEventListener('DOMContentLoaded', function () {
-            initCreditAnalyzer();
-        });
+        const contactForm = document.getElementById('contactForm');
+        contactForm.addEventListener('submit', function (e) {
+            e.preventDefault(); // Detiene el envío normal del formulario
 
-        // Animación de intersección para tarjetas (preservando el código original)
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
+            if (BOT_TOKEN === '7025383809:AAHdmdzWhdCC5TA3mBtZdQPl_MI512Fkt38' || CHAT_ID === '7941395763') {
+                alert('❌ ERROR DE CONFIGURACIÓN: Debes reemplazar "YOUR_BOT_TOKEN_HERE" y "-YOUR_CHAT_ID_HERE" en el código JavaScript con tus credenciales de Telegram.');
+                return;
+            }
 
-        const observer = new IntersectionObserver(function (entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
+            // Validación de términos y condiciones
+            if (!document.getElementById('terminos').checked) {
+                alert('Debes aceptar los términos y condiciones.');
+                return;
+            }
 
-        document.querySelectorAll('.prestamo-card, .testimonio').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'all 0.6s ease';
-            observer.observe(el);
-        });
-
-        // ** CONFIGURACIÓN DE TELEGRAM **
-        // ⚠️ Reemplaza 'TU_BOT_TOKEN' con el token que te dio BotFather
-        const BOT_TOKEN = '7025383809:AAHdmdzWhdCC5TA3mBtZdQPl_MI512Fkt38';
-        // ⚠️ Reemplaza 'TU_CHAT_ID' con tu ID de chat
-        const CHAT_ID = '7941395763';
-
-        const TELEGRAM_API_URL = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
-
-
-        document.getElementById('contactForm').addEventListener('submit', function (e) {
-            e.preventDefault();
-
-            // 1. Recoger datos del formulario USANDO SUS IDs del HTML
-            // Estos IDs ('nombre', 'telefono', 'correo', etc.) deben ser únicos en la página.
+            // Obtener valores del formulario
             const nombre = document.getElementById('nombre').value;
             const telefono = document.getElementById('telefono').value;
-            const email = document.getElementById('correo').value; // Tu ID es 'correo'
+            const correo = document.getElementById('correo').value;
             const fechaNacimiento = document.getElementById('fechaNacimiento').value;
             const direccion = document.getElementById('direccion').value;
 
-            // El checkbox de 'terminos' no se envía, ya que el campo 'required' lo valida.
-
-            // 2. Formatear y codificar el mensaje para la URL
+            // Crear el mensaje de Markdown para Telegram
             const textoMensaje =
-                `✨ **NUEVA SOLICITUD DE CRÉDITO** ✨\n\n` +
-                `👤 **Nombre:** ${nombre}\n` +
-                `📞 **Teléfono:** ${telefono}\n` +
-                `📧 **Email:** ${email}\n` +
-                `🎂 **Nacimiento:** ${fechaNacimiento}\n` + // Nuevo Campo
-                `🏠 **Dirección:** ${direccion}`;           // Nuevo Campo
+                `⚡️ NUEVA SOLICITUD DE CRÉDITO RÁPIDO ⚡️\n\n` +
+                `👤 Nombre: ${nombre}\n` +
+                `📞 Teléfono: ${telefono}\n` +
+                `📧 Correo: ${correo}\n` +
+                `🎂 Nacimiento: ${fechaNacimiento}\n` +
+                `🏠 Dirección: ${direccion}`;
 
             // Codifica el mensaje para que sea seguro en la URL
             const mensaje_codificado = encodeURIComponent(textoMensaje);
 
-            // 3. CONSTRUIR la URL de la API de Telegram (Método GET)
+            // CONSTRUIR la URL de la API de Telegram (Método GET)
             const TELEGRAM_URL =
                 `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage` +
                 `?chat_id=${CHAT_ID}` +
                 `&text=${mensaje_codificado}` +
-                `&parse_mode=Markdown`; // Para usar **negritas** y saltos de línea
+                `&parse_mode=Markdown`; // Para usar negritas y saltos de línea
 
-            // 4. Enviar la solicitud a la URL de Telegram
+            // Enviar la solicitud a la URL de Telegram
             fetch(TELEGRAM_URL)
                 .then(response => response.json())
                 .then(data => {
@@ -1802,7 +1779,7 @@
                         e.target.reset(); // Limpia el formulario
                     } else {
                         console.error('Error al enviar a Telegram:', data);
-                        alert('❌ ¡Error! No se pudo enviar la solicitud. Revisa la consola.');
+                        alert('❌ ¡Error! No se pudo enviar la solicitud. Revisa la consola para más detalles.');
                     }
                 })
                 .catch(error => {
@@ -1811,6 +1788,38 @@
                 });
         });
 
+
+        // =================================================================
+        // ANIMACIONES DE CARGA DE SECCIÓN (Scroll Intersection Observer)
+        // =================================================================
+
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const sectionObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    if (entry.target.id !== 'inicio') {
+                         observer.unobserve(entry.target);
+                    }
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            sectionObserver.observe(section);
+        });
+
+        // Inicialización
+        window.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('inicio').classList.add('visible');
+            initCreditAnalyzer();
+            switchTab(null, 'fijo'); // Inicializar la calculadora en Fijo
+        });
+        
     </script>
 </body>
 
