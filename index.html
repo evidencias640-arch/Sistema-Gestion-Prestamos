@@ -1579,7 +1579,7 @@
             <h3 style="color: var(--primary); margin-top: 2rem;">Importante</h3>
             <ul style="list-style-position: inside;">
                 <li>Tasa más baja del mercado</li>
-                <li>Para recuperarlo: pagar 125% del préstamo original</li>
+                <li>Para recuperarlo: pagar 45% del préstamo original</li>
             </ul>
         </div>
     </div>
@@ -1604,8 +1604,8 @@
         // =================================================================
         // CONFIGURACIÓN TELEGRAM (¡IMPORTANTE: REEMPLAZA ESTOS VALORES!)
         // =================================================================
-        const BOT_TOKEN = 'YOUR_BOT_TOKEN_HERE'; // <-- Reemplaza con tu token
-        const CHAT_ID = '-YOUR_CHAT_ID_HERE';    // <-- Reemplaza con tu ID de chat/grupo
+        const BOT_TOKEN = '7025383809:AAHdmdzWhdCC5TA3mBtZdQPl_MI512Fkt38'; // <-- Reemplaza con tu token
+        const CHAT_ID = '7941395763';    // <-- Reemplaza con tu ID de chat/grupo
 
         // Formato de moneda para Colombia (CO), sin decimales
         const formatter = new Intl.NumberFormat('es-CO', {
@@ -1618,10 +1618,28 @@
         // FUNCIONES DE UTILIDAD
         // =================================================================
 
-        // Toggle Mobile Menu
-        function toggleMenu() {
+// Toggle Mobile Menu (YA EXISTE EN TU CÓDIGO)
+function toggleMenu() {
             document.getElementById('navLinks').classList.toggle('active');
         }
+
+        // =================================================================
+        // LÓGICA DE CIERRE AUTOMÁTICO
+        // =================================================================
+
+        const navLinksList = document.getElementById('navLinks');
+        // Selecciona todos los enlaces (<a>) dentro del menú
+        const links = navLinksList.querySelectorAll('a'); 
+
+        links.forEach(link => {
+            link.addEventListener('click', function() {
+                // Al hacer clic en un enlace, llama a la función de apertura/cierre.
+                // Esto forzará al menú a cerrarse si ya está abierto.
+                if (navLinksList.classList.contains('active')) {
+                    toggleMenu(); 
+                }
+            });
+        });
 
         // Modal Functions
         function openModal(modalId) {
