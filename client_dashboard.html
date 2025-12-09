@@ -862,8 +862,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   
   <script>
-    // **AQUÍ DEBES PEGAR LA URL DE TU APLICACIÓN WEB DE GOOGLE APPS SCRIPT**
-    const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbxCILJhPhwUWLdc1ws6THP2UUkL7z8SwJbl5yPU6Lc6yRXoJcBmqqyofI9MCKjNfBFygg/exec'; 
+    const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbxZeHi-Qhpdq5PNcn0wiE8mglcH52-B7yZEdDLMu-MQqnPEUfvDNVtPyVu8ksBuSOUKuw/exec'; 
 
     // Variables globales
     let sessionToken = localStorage.getItem('sessionToken');
@@ -892,7 +891,7 @@
     // FUNCIÓN DE CONEXIÓN AL BACKEND
     // ===================================
     async function makeRequest(action, data = {}) {
-    const url = 'https://script.google.com/macros/s/AKfycbxCILJhPhwUWLdc1ws6THP2UUkL7z8SwJbl5yPU6Lc6yRXoJcBmqqyofI9MCKjNfBFygg/exec';
+    const url = 'https://script.google.com/macros/s/AKfycbxZeHi-Qhpdq5PNcn0wiE8mglcH52-B7yZEdDLMu-MQqnPEUfvDNVtPyVu8ksBuSOUKuw/exec';
     const form = new FormData();
     form.append('payload', JSON.stringify({ ...data, action, sessionToken }));
 
@@ -1466,3 +1465,4 @@
   </script>
 </body>
 </html>
+
